@@ -17,9 +17,7 @@ def KLDiv(P,Q):
 # dist = n x 1
 
     P = np.transpose(np.array([P])) #BEWARE new line of code added
-    #if P.shape[1] != Q.shape[1]: #BEWARE ALL P[1] is P[0]
-    #print(P.shape)
-    #print(Q.shape)
+
     if P.shape[1] != Q.shape[1]:
         print('the number of columns in P and Q should be the same')
 
@@ -36,8 +34,7 @@ def KLDiv(P,Q):
         temp =  P* np.log(P /np.matlibrepmat(Q, P.shape[0], 1))
         temp[np.isnan(temp)]=0    # resolving the case when P(i)==0
         dist = sum(temp)
-        
-    #elif Q.shape[0] == P.shape[0]: #BEWARE
+
     else:
         Q = Q /np.matlib.repmat(sum(Q),1, Q.shape[1])
         P = P /np.matlib.repmat(sum(P),1, P.shape[1])

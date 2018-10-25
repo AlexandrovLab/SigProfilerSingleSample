@@ -5,7 +5,26 @@ Created on Fri Oct  5 18:36:41 2018
 @author: compactmatter
 """
 
-def check_signature_rules(signaturesInSample, signatures, sampleID, seqType, totalMutations, strandBias):
+def check_signature_rules(signaturesInSample,
+                          signatures,
+                          sampleID,
+                          seqType,
+                          totalMutations,
+                          strandBias,
+                          C_to_A_p_file,
+                          C_to_A_d_file,
+                          C_to_G_p_file,
+                          C_to_G_d_file,
+                          C_to_T_p_file,
+                          C_to_T_d_file,
+                          T_to_A_p_file,
+                          T_to_A_d_file,
+                          T_to_C_p_file,
+                          T_to_C_d_file,
+                          T_to_C_ATN_p_file,
+                          T_to_C_ATN_d_file,
+                          T_to_G_p_file,
+                          T_to_G_d_file):
     
     totalSignatures = len(signaturesInSample)
     strand_bias_cutoff = 10**-2
@@ -19,20 +38,20 @@ def check_signature_rules(signaturesInSample, signatures, sampleID, seqType, tot
     else:
         print('Invalid type of sequencing data!')    
     
-    C_to_A_p = [float(i) for i in open('input/C_to_A_p.txt','r').read().split('\n')]
-    C_to_A_d = [float(i) for i in open('input/C_to_A_d.txt','r').read().split('\n')]
-    C_to_G_p = [float(i) for i in open('input/C_to_G_p.txt','r').read().split('\n')]
-    C_to_G_d = [float(i) for i in open('input/C_to_G_d.txt','r').read().split('\n')]
-    C_to_T_p = [float(i) for i in open('input/C_to_T_p.txt','r').read().split('\n')]
-    C_to_T_d = [float(i) for i in open('input/C_to_T_d.txt','r').read().split('\n')]
-    T_to_A_p = [float(i) for i in open('input/T_to_A_p.txt','r').read().split('\n')]
-    T_to_A_d = [float(i) for i in open('input/T_to_A_d.txt','r').read().split('\n')]
-    T_to_C_p = [float(i) for i in open('input/T_to_C_p.txt','r').read().split('\n')]
-    T_to_C_d = [float(i) for i in open('input/T_to_C_d.txt','r').read().split('\n')]
-    T_to_C_ATN_p = [float(i) for i in open('input/T_to_C_ATN_p.txt','r').read().split('\n')]
-    T_to_C_ATN_d = [float(i) for i in open('input/T_to_C_ATN_d.txt','r').read().split('\n')]
-    T_to_G_p = [float(i) for i in open('input/T_to_G_p.txt','r').read().split('\n')]
-    T_to_G_d = [float(i) for i in open('input/T_to_G_d.txt','r').read().split('\n')]
+    C_to_A_p = [float(i) for i in open(C_to_A_p_file,'r').read().split('\n')]
+    C_to_A_d = [float(i) for i in open(C_to_A_d_file,'r').read().split('\n')]
+    C_to_G_p = [float(i) for i in open(C_to_G_p_file,'r').read().split('\n')]
+    C_to_G_d = [float(i) for i in open(C_to_G_d_file,'r').read().split('\n')]
+    C_to_T_p = [float(i) for i in open(C_to_T_p_file,'r').read().split('\n')]
+    C_to_T_d = [float(i) for i in open(C_to_T_d_file,'r').read().split('\n')]
+    T_to_A_p = [float(i) for i in open(T_to_A_p_file,'r').read().split('\n')]
+    T_to_A_d = [float(i) for i in open(T_to_A_d_file,'r').read().split('\n')]
+    T_to_C_p = [float(i) for i in open(T_to_C_p_file,'r').read().split('\n')]
+    T_to_C_d = [float(i) for i in open(T_to_C_d_file,'r').read().split('\n')]
+    T_to_C_ATN_p = [float(i) for i in open(T_to_C_ATN_p_file,'r').read().split('\n')]
+    T_to_C_ATN_d = [float(i) for i in open(T_to_C_ATN_d_file,'r').read().split('\n')]
+    T_to_G_p = [float(i) for i in open(T_to_G_p_file,'r').read().split('\n')]
+    T_to_G_d = [float(i) for i in open(T_to_G_d_file,'r').read().split('\n')]
     
     for i in range(totalSignatures):
 

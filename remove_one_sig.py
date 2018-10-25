@@ -24,21 +24,15 @@ def remove_one_sig(exposures, allSignatures, genome, saOptions):
         norm_one_dif_wo = np.zeros((numberOfSignatures, 1))
         
         for j in range(numberOfSignatures):
-            #print(j)
-            #print(sum(exposures > 0))
             exposuresRemoveOne = exposures
-            #print(numberOfSignatures)
-            #print(sig_IDs)
-            #print(exposuresRemoveOne)
-            #print(exposuresRemoveOne)
+
             # exposuresRemoveOne[sig_IDs[j]] = 0 #BEWARE code modification this line has been sent 2 lines below
             
             [exposuresSample_wo[:,j], accr_wo[j], kl_div_wo[j], frob_rel_div_wo[j], norm_one_dif_wo[j]] = eval_single_sample(exposuresRemoveOne, allSignatures, genome, saOptions) #BEWARE
-            [exposuresSample_wo[:,j], accr_wo[j], kl_div_wo[j], frob_rel_div_wo[j], norm_one_dif_wo[j]] = eval_single_sample(exposuresRemoveOne, allSignatures, genome, saOptions)
+            #[exposuresSample_wo[:,j], accr_wo[j], kl_div_wo[j], frob_rel_div_wo[j], norm_one_dif_wo[j]] = eval_single_sample(exposuresRemoveOne, allSignatures, genome, saOptions)
             
             #exposuresRemoveOne[sig_IDs[j]] = 0 
             #exposuresSample_wo[:,j] = exposuresSample_wo_j
-        #print(frob_rel_div_wo)
         fVal = min(scipy.stats.hmean([1-accr_wo, frob_rel_div_wo])) #BEWARE
         fID = np.argmin(fVal)
         accr = accr_wo[fID]

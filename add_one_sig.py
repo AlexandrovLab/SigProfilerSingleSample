@@ -13,26 +13,18 @@ def add_one_sig(exposures, allSignatures, genome, saOptions):
     
     numberOfSignatures = len(exposures) - sum(exposures>0)
     sig_IDs = [i for i, x in enumerate(exposures) if x <= 0] #BEWARE code modification originally x == 0; #MATLAB CODE    sig_IDs = find(exposures==0)
-    totalSignatures = allSignatures.shape[1] #MATLAB CODE size(allSignatures, 2)
-    #print(exposures)
-    #print(len(exposures))
-    #print(sum(exposures > 0))
-    #print(numberOfSignatures)
-    #print(sig_IDs)
-    #print(len(sig_IDs))
+    totalSignatures = allSignatures.shape[1]
+
     if ( numberOfSignatures > 1 ):
         exposuresSample_with = np.zeros((totalSignatures, numberOfSignatures))
-        accr_with = np.zeros((numberOfSignatures, 1), dtype = int) #MATLAB CODE accr_with = zeros(numberOfSignatures, 1);
-        kl_div_with = np.zeros((numberOfSignatures, 1), dtype = int) #MATLAB CODE kl_div_with = zeros(numberOfSignatures, 1);
-        frob_rel_div_with = np.zeros((numberOfSignatures, 1), dtype = int) #MATLAB CODE frob_rel_div_with = zeros(numberOfSignatures, 1);
-        norm_one_dif_with = np.zeros((numberOfSignatures, 1), dtype = int) #MATLAB CODE norm_one_dif_with = zeros(numberOfSignatures, 1);
+        accr_with = np.zeros((numberOfSignatures, 1), dtype = int)
+        kl_div_with = np.zeros((numberOfSignatures, 1), dtype = int)
+        frob_rel_div_with = np.zeros((numberOfSignatures, 1), dtype = int)
+        norm_one_dif_with = np.zeros((numberOfSignatures, 1), dtype = int)
         
         for j in range(numberOfSignatures):
             exposuresAddOne = exposures
             exposuresAddOne[sig_IDs[j]] = 1
-            #print(j)
-            #print(exposuresAddOne.shape)
-            #print(sig_IDs[j])
             [exposuresSample_with[:,j], accr_with[j], kl_div_with[j], frob_rel_div_with[j], norm_one_dif_with[j]] = eval_single_sample(exposuresAddOne, allSignatures, genome, saOptions)
 
         fVal =  min(scipy.stats.hmean([(1-accr_with), frob_rel_div_with])) #BEWARE

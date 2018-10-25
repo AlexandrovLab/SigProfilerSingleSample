@@ -13,11 +13,7 @@ def remove_all_single_signatures(exposures_init, allSignatures, genome, saOption
     from eval_single_sample import eval_single_sample
     # Check initial sample
     if ( sum(exposures_init) > 0):
-        #print('before eval single sample')
-        #print(exposures_init.shape)
         [exposures, accr_first, kl_div_first, frob_rel_div_first, norm_one_dif_first] = eval_single_sample(exposures_init, allSignatures, genome, saOptions)
-        #print('after eval single sample')
-        #print(exposures.shape)
         exposuresOutput = exposures     
         accr = accr_first 
         kl_div = kl_div_first 
@@ -26,10 +22,8 @@ def remove_all_single_signatures(exposures_init, allSignatures, genome, saOption
 
         # Removing singature one by one
         numSig = int(sum((np.array([exposures])>0).ravel()))
-        #print(numSig)
         for j in range(( numSig - 1)): #BEWARE code modification
         #for j in range(numSig):
-            #print(j)
             [accr_temp, kl_div_temp, frob_rel_div_temp, norm_one_dif_temp, exposuresSample_temp, fID] = remove_one_sig(exposuresOutput, allSignatures, genome, saOptions)
             if ( (accr_first - accr_temp < 0.01) ):
                 exposuresOutput = exposuresSample_temp

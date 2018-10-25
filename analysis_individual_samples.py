@@ -4,18 +4,24 @@ Created on Fri Oct  5 18:17:39 2018
 
 @author: compactmatter
 """
-#%%
-def is_empty(any_structure):
-    if any_structure:
-        print('Structure is not empty.')
-        return False
-    else:
-        print('Structure is empty.')
-        return True
-#%%
 
-
-def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAnalysis, outputFolder, outputFile, useRules, allowSigsEverywhere, connected):
+def analysis_individual_samples(signaturesSet,
+                                signaturesInSamples,
+                                samplesForAnalysis,
+                                outputFolder,
+                                outputFile,
+                                useRules,
+                                allowSigsEverywhere,
+                                connected,
+                                newSignatures_file,
+                                genomeSignatures_file,
+                                exomeSignatures_file,
+                                sampleNames_file,
+                                sampleCancerTypes_file,
+                                cancerType_file,
+                                seqType_file,
+                                totalMutations_file,
+                                signaturesInSamples_file):
     import numpy as np
     import scipy.io as sio
     #Analysis of data
@@ -35,7 +41,7 @@ def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAn
     norm_one_dif_org = np.zeros((totalSamples, 1)) 
 
     #Loading signatures
-    newSignatures = open('input/signaturesSet.txt','r').read().split('\n')
+    newSignatures = open(newSignatures_file,'r').read().split('\n')
     
     if(dir().count('allowSigsEverywhere') > 0 and len(allowSigsEverywhere) > 0):
         print('Allow these signatures in all samples:')
@@ -53,18 +59,17 @@ def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAn
                 dispStr = dispStr + '; ' + newSignatures[connected[i][j] - 1]
             print(dispStr)
     
-    allGenomeSignatures = np.loadtxt('input/genomeSignatures.txt') #newSignatures.genomeSignatures   
-    allExomeSignatures  = np.loadtxt('input/exomeSignatures.txt') #newSignatures.exomeSignatures  
+    allGenomeSignatures = np.loadtxt(genomeSignatures_file)  
+    allExomeSignatures  = np.loadtxt(exomeSignatures_file)
     sigNames = newSignatures
     totalSignatures = allGenomeSignatures.shape[1]
     exposuresNew = np.zeros((totalSignatures, totalSamples))
 
-
     #Loading signatures in samples
     #sigsInCanType = load(signaturesInSamples)
     
-    sampleNames = open('input/sampleNames.txt','r').read().split('\n')
-    sampleCancerTypes = open('input/sampleCancerTypes.txt','r').read().split('\n')
+    sampleNames = open(sampleNames_file,'r').read().split('\n')
+    sampleCancerTypes = open(sampleCancerTypes_file,'r').read().split('\n')
     
     longSampleNames = ["" for x in range(len(sampleNames))]
     
@@ -72,10 +77,6 @@ def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAn
        longSampleNames[i] = sampleCancerTypes[i] + '::' + sampleNames[i]
 
     #Minization options
-    #saOptions = optimset( 'Display', 'off', 'TolFun', 1e-100,
-    #                      'MaxFunEvals', Inf, 'MaxIter', 100000,
-    #                      'Algorith', 'interior-point', 'FinDiffType', 'central',
-    #                      'TolCon', 1e-100, 'TolX', 1e-100 )
     
     saOptions = [ 'Display', 'off', 'TolFun', 1e-100,
                           'MaxFunEvals', float("inf"), 'MaxIter', 100000,
@@ -93,13 +94,13 @@ def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAn
            allSignatures =  allExomeSignatures
 
         #Identify signatures in cancer type and apply signature rules
-        cancerType = open('input/cancerType.txt','r').read().split('\n')
-        seqType = open('input/seqType.txt','r').read().split('\n')
-        totalMutations = [float(i) for i in open('input/totalMutations.txt','r').read().split('\n')]               
+        cancerType = open(cancerType_file,'r').read().split('\n')
+        seqType = open(seqType_file,'r').read().split('\n')
+        totalMutations = [float(i) for i in open(totalMutations_file,'r').read().split('\n')]               
         
         longSampleName = cancerType[iSample] + '::' + sampleNames[iSample]
         
-        signaturesInSamples = np.loadtxt('input/signaturesInSamples.txt')
+        signaturesInSamples = np.loadtxt(signaturesInSamples_file)
         
         exposures = signaturesInSamples[:, longSampleNames.index(longSampleName)]
         if ( exposures.size == 0 ):
@@ -108,10 +109,27 @@ def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAn
         strandBias = input['strandBias']
         
         if ( useRules == 1 ):
-            ######FUNCTION BLOCK#############################################
-            exposures = check_signature_rules(exposures, sigNames, iSample, seqType, totalMutations, strandBias)
+            exposures = check_signature_rules(exposures,
+                                              sigNames,
+                                              iSample,
+                                              seqType,
+                                              totalMutations,
+                                              strandBias,
+                                              'input/C_to_A_p.txt',
+                                              'input/C_to_A_d.txt',
+                                              'input/C_to_G_p.txt',
+                                              'input/C_to_G_d.txt',
+                                              'input/C_to_T_p.txt',
+                                              'input/C_to_T_d.txt',
+                                              'input/T_to_A_p.txt',
+                                              'input/T_to_A_d.txt',
+                                              'input/T_to_C_p.txt',
+                                              'input/T_to_C_d.txt',
+                                              'input/T_to_C_ATN_p.txt',
+                                              'input/T_to_C_ATN_d.txt',
+                                              'input/T_to_G_p.txt',
+                                              'input/T_to_G_d.txt')
             
-            #FUNCTION BLOCK END####################################################################################
         #Remove all signatures in the sample: one by one
         #Add signatures that are allowed everywhere
         #if ( len(idsToAdd) > 0 ): #BEWARE modification to code in a few more ifs down as well
@@ -123,11 +141,9 @@ def analysis_individual_samples(signaturesSet, signaturesInSamples, samplesForAn
             for iConnect in range(len(connected)):
                 if ( sum(exposures[connected[iConnect]]) > 0 ):
                     exposures[connected[iConnect]] = 1
-        #####FUNCTION BLOCK BEGINS####################################################################
         
         [exposuresOutput, accr, kl_div, frob_rel_div, norm_one_dif] = remove_all_single_signatures(exposures, allSignatures, genome, saOptions, sigNames)
        
-        #####FUNCTION BLOCK ENDS#######################################################################
         #Add all remaining signatures to the sample: one by one
         #Add signatures that are allowed everywhere
         if (idsToAdd != False):

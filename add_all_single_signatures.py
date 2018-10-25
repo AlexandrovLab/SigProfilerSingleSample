@@ -27,5 +27,4 @@ def add_all_single_signatures(exposures_init, allSignatures, genome, saOptions, 
         else: 
             break
     
-    #return [exposuresOutput, accr, kl_div, frob_rel_div, norm_one_dif] #BEWARE modification code
     return exposuresOutput
