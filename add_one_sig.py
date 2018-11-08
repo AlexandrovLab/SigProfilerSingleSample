@@ -5,7 +5,7 @@ Created on Fri Oct  5 17:42:40 2018
 @author: compactmatter
 """
 import numpy as np
-import scipy
+import scipy.stats
 
 def add_one_sig(exposures, allSignatures, genome, saOptions):
     

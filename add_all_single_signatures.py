@@ -5,8 +5,6 @@ Created on Fri Oct  5 17:29:41 2018
 @author: compactmatter
 """
 
-import numpy as np
-
 def add_all_single_signatures(exposures_init, allSignatures, genome, saOptions, sigNames):
     
     from eval_single_sample import eval_single_sample
@@ -21,7 +19,8 @@ def add_all_single_signatures(exposures_init, allSignatures, genome, saOptions, 
                
         if ( (accr_temp - accr) > 0.05 ):
             exposuresOutput = exposuresSample_temp   
-            accr = accr_temp; kl_div = kl_div_temp
+            accr = accr_temp
+            kl_div = kl_div_temp
             frob_rel_div = frob_rel_div_temp
             norm_one_dif =  norm_one_dif_temp
         else: 

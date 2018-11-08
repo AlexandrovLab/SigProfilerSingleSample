@@ -5,42 +5,18 @@ Created on Mon Oct  8 11:32:39 2018
 @author: compactmatter
 """
 #%%
-# Example for running SigProfilerSingleSample 
-# The example examines 10 biliary adenocarcinoma whole-genomes from ICGC PCAWG and
-# assigns mutational signatures using upcoming release of PCAWG mutational signatures
-# Clearing all data
-
-#close all;
-#clearvars;
-#clc;
-#addpath('source/');
-
-# Starting the default cluster
-#if ( ~isempty(gcp('nocreate')) )
-#    delete(gcp);
-#end
-
-#c = parcluster;
-#job = parpool(c);
-
-# Analysis of all signatures in individual samples
-#tic
-
-#%%
-
-#%%
 
 import sys
 sys.path.append('C:/Users/compactmatter/Downloads/SigProfiler/SigProfilerSingleSample/')
 SigProfilerPath = 'C:/Users/compactmatter/Downloads/SigProfiler/SigProfilerSingleSample/'
 
 #%%
+
 import os
 os.chdir(sys.path[-1])
 from scipy import optimize
 from scipy.optimize import minimize
-from scipy import stats
-
+import scipy.stats
 
 #%%
 from analysis_individual_samples import analysis_individual_samples
@@ -62,4 +38,3 @@ analysis_individual_samples('input/Consensus_subs_mutational_signatures.mat', # 
                             'input/seqType.txt',
                             'input/totalMutations.txt',
                             'input/signaturesInSamples.txt') # connected signatures (e.g., signatures SBS-2 and SBS-13)
-#toc

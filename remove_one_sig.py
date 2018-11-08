@@ -12,7 +12,6 @@ def remove_one_sig(exposures, allSignatures, genome, saOptions):
     from eval_single_sample import eval_single_sample
     
     numberOfSignatures = int(sum((np.array([exposures])>0).ravel()))
-    print(exposures.shape)
     sig_IDs = [i for i, x in enumerate(exposures) if x > 0]
     totalSignatures = allSignatures.shape[1]
     
