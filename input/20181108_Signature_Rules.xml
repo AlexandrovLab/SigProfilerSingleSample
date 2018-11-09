@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<signatureRules>
+	
+	<signatureName sigName = "Signature Subs-04">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-05">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-06">
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-07a">
+		<strandBias>
+			<mutationType type = "C>T">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-07b">
+		<strandBias>
+			<mutationType type = "C>T">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-07c">
+		<strandBias>
+			<mutationType type = "T>A">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+			<mutationType type = "T>C">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>
+
+	<signatureName sigName = "Signature Subs-07d">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-08">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-10a">
+		<totalMutations>
+			<seqType type = "WGS">
+				<poleCutoff>100000</poleCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<poleCutoff>2000</poleCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-10b">
+		<totalMutations>
+			<seqType type = "WGS">
+				<poleCutoff>100000</poleCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<poleCutoff>2000</poleCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+
+	<signatureName sigName = "Signature Subs-12">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-14">
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-15">
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-16">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-19">
+		<strandBias>
+			<mutationType type = "C>T">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-20">
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+	
+	<signatureName sigName = "Signature Subs-21">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-22">
+		<strandBias>
+			<mutationType type = "T>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-23">
+		<strandBias>
+			<mutationType type = "C>T">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-24">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-25">
+		<strandBias>
+			<mutationType type = "T>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-26">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-27">
+		<strandBias>
+			<mutationType type = "T>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-31">
+		<strandBias>
+			<mutationType type = "C>T">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-32">
+		<strandBias>
+			<mutationType type = "C>T">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-33">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-35">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-42">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+			<mutationType type = "C>T">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-44">
+		<strandBias>
+			<mutationType type = "T>G">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-46">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-47">
+		<strandBias>
+			<mutationType type = "T>G">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-50">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-51">
+		<strandBias>
+			<mutationType type = "C>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+			<mutationType type = "C>T">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+			<mutationType type = "T>A">
+				<direction>-1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-57">
+		<strandBias>
+			<mutationType type = "T>C">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+			<mutationType type = "T>G">
+				<direction>1</direction>
+				<pValue>0.01</pValue>
+			</mutationType>
+	    </strandBias>
+	</signatureName>	
+	
+	<signatureName sigName = "Signature Subs-60">
+		<totalMutations>
+			<seqType type = "WGS">
+				<msiCutoff>10000</msiCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<msiCutoff>200</msiCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+	
+</signatureRules>
