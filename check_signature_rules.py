@@ -4,6 +4,7 @@ Created on Fri Oct  5 18:36:41 2018
 
 @author: compactmatter
 """
+import xml.etree.ElementTree as ET  
 
 def check_signature_rules(signaturesInSample,
                           signatures,
@@ -24,7 +25,8 @@ def check_signature_rules(signaturesInSample,
                           T_to_C_ATN_p_file,
                           T_to_C_ATN_d_file,
                           T_to_G_p_file,
-                          T_to_G_d_file):
+                          T_to_G_d_file,
+                          signatureRulesXML):
     
     totalSignatures = len(signaturesInSample)
     strand_bias_cutoff = 10**-2
@@ -52,110 +54,27 @@ def check_signature_rules(signaturesInSample,
     T_to_C_ATN_d = [float(i) for i in open(T_to_C_ATN_d_file,'r').read().split('\n')]
     T_to_G_p = [float(i) for i in open(T_to_G_p_file,'r').read().split('\n')]
     T_to_G_d = [float(i) for i in open(T_to_G_d_file,'r').read().split('\n')]
-    
+
+    tree = ET.parse(signatureRulesXML)  
+    root = tree.getroot()
+
+    signaturesList = []    
     for i in range(totalSignatures):
-
-        #Transcriptional Strand Bias
-        #[C>A transcribed] Check C>A transcriptional strand bias for signatures 4, 8, 24, 35, 42, and 51
-        if ( 'Signature Subs-04' == signatures[i] or
-             'Signature Subs-08' == signatures[i] or
-             'Signature Subs-24' == signatures[i] or
-             'Signature Subs-35' == signatures[i] or
-             'Signature Subs-42' == signatures[i] or
-             'Signature Subs-51' == signatures[i]):
-
-           if ( C_to_A_p[sampleID] > strand_bias_cutoff or C_to_A_d[sampleID] != -1 ): # damage on G
-               signaturesInSample[i] = 0
-        
-        #[C>A untranscribed] Check C>A transcriptional strand bias for signatures 50
-        if ( 'Signature Subs-50' == signatures[i] ):
-
-           if ( C_to_A_p[sampleID] > strand_bias_cutoff or C_to_A_d[sampleID] != 1 ): # damage on C
-               signaturesInSample[i] = 0
-                
-        #[C>T transcribed] Check C>T transcriptional strand bias for signatures 19, 23, 31, 32, 42, and 51
-        if ( 'Signature Subs-19' == signatures[i] or
-             'Signature Subs-23' == signatures[i] or
-             'Signature Subs-31' == signatures[i] or
-             'Signature Subs-32' == signatures[i] or
-             'Signature Subs-42' == signatures[i] ):
-         
-            if ( C_to_T_p[sampleID] > strand_bias_cutoff or C_to_T_d[sampleID] != -1): # damage on G
-               signaturesInSample[i] = 0
-        
-        #[C>T untranscribed] Check C>T transcriptional strand bias for signatures 7a and 7b
-        if ( 'Signature Subs-07a' == signatures[i] or
-             'Signature Subs-07b' == signatures[i] or
-             'Signature Subs-51' == signatures[i] ):
-         
-            if (C_to_T_p[sampleID] > strand_bias_cutoff or C_to_T_d[sampleID] != 1): # damage on C
-               signaturesInSample[i] = 0
-        
-        #[T>A transcribed] Check T>A transcriptional strand bias for signature 22, 25, and 27
-        if ( 'Signature Subs-22' == signatures[i] or
-             'Signature Subs-25' == signatures[i] or
-             'Signature Subs-27' == signatures[i] or
-             'Signature Subs-51' == signatures[i] ):
-         
-            if ( T_to_A_p[sampleID] > strand_bias_cutoff or T_to_A_d[sampleID] != -1): # damage on A
-               signaturesInSample[i] = 0
-        
-        #[T>A untranscribed] Check T>A transcriptional strand bias for signature 7c
-        if ( 'Signature Subs-07c' == signatures[i] or 'Signature Subs-47' == signatures[i]):
+        for signature in root.findall('signatureName'):
+            signaturesList.append(signature.get("sigName"))
             
-            if ( T_to_A_p[sampleID] > strand_bias_cutoff or T_to_A_d[sampleID] != 1): # damage on T
-               signaturesInSample[i] = 0
-        
-        #[T>C transcribed] Check T>C transcriptional strand bias for signatures 5, 12, and 16
-        if ( 'Signature Subs-05' == signatures[i] or 
-             'Signature Subs-12' == signatures[i] or 
-             'Signature Subs-16' == signatures[i] or 
-             'Signature Subs-46' == signatures[i] ):
-         
-            if ( T_to_C_p[sampleID] > strand_bias_cutoff or T_to_C_d[sampleID] != -1 ): # damage on A
-               signaturesInSample[i] = 0
-        
-        #[T>C untranscribed] Check T>C transcriptional strand bias for signatures 7c, 7d, 21, 26, 33, and 57
-        if ( 'Signature Subs-07c' == signatures[i] or
-             'Signature Subs-07d' == signatures[i] or 
-             'Signature Subs-21' == signatures[i] or
-             'Signature Subs-26' == signatures[i] or 
-             'Signature Subs-33' == signatures[i] or 
-             'Signature Subs-57' == signatures[i]  ):
-         
-            if ( T_to_C_p[sampleID] > strand_bias_cutoff or T_to_C_d[sampleID] != 1): # damage on T
-               signaturesInSample[i] = 0
-        
-        #[T>G transcribed] Check T>G transcriptional strand bias for signatures 5, 12, and 16
-        if ( 'Signature Subs-47' == signatures[i] ): 
-         
-            if ( T_to_G_p[sampleID] > strand_bias_cutoff or T_to_G_d[sampleID] != -1): # damage on A
-               signaturesInSample[i] = 0
-        
-        #[T>G untranscribed] Check T>G transcriptional strand bias for signatures 7d, 21, 26, and 33
-        if ( 'Signature Subs-44' == signatures[i] or 'Signature Subs-57' == signatures[i]): 
-         
-            if ( T_to_G_p[sampleID] > strand_bias_cutoff or T_to_G_d[sampleID] != 1): # damage on T
-               signaturesInSample[i] = 0     
-                
-        # Check large numbers of mutations for POLE signatures
-        if ('Signature Subs-10a' == signatures[i] or 'Signature Subs-10b' == signatures[i]):
-            
-           #Checking numbers of single base mutations
-           if ( float(totalMutations[sampleID]) < pole_subs_cutoff ):
-               signaturesInSample[i] = 0
-        
-        # Check short mutations for MSI signatures
-        if ( 'Signature Subs-06' == signatures[i] or 
-             'Signature Subs-14' == signatures[i] or 
-             'Signature Subs-15' == signatures[i] or 
-             'Signature Subs-20' == signatures[i] or 
-             'Signature Subs-21' == signatures[i] or 
-             'Signature Subs-26' == signatures[i] or 
-             'Signature Subs-60' == signatures[i] ):
-
-            #Checking numbers of subs
-            if ( float(totalMutations[sampleID]) < msi_subs_cutoff ):
-                signaturesInSample[i] = 0
+        if(signatures[i] in signaturesList):
+            if (root.find(".//strandBias/..[@sigName='" + signatures[i] + "']") is not None):
+                strandbias = root.find(".//strandBias/..[@sigName='Signature Subs-04']").find('strandBias').findall('mutationType')
+                for sb in range(len(strandbias)):
+                    if( eval(strandbias[sb].get('type').replace('>','_to_') + "_p[sampleID]") > float(strandbias[sb][1].text) or
+                       eval(strandbias[sb].get('type').replace('>','_to_') + "_d[sampleID]") != float(strandbias[sb][0].text)):
+                        signaturesInSample[i] = 0
+            if (root.find(".//totalMutations/..[@sigName='Signature Subs-04']") is not None):
+                totalmutations = root.find(".//totalMutations/..[@sigName='" + signatures[i] + "']").find('totalMutations').findall('seqType')
+                for st in range(len(totalmutations)):
+                    if( totalmutations[st].get('type') == seqType[sampleID]):
+                        if( float(totalMutations[sampleID]) < float(totalmutations[st][0].text) ):
+                            signaturesInSample[i] = 0
                 
     return signaturesInSample
