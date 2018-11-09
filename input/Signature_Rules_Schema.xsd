@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="SigProfilerSingleSample">
+	
+<!-- definition of simple elements -->
+<xs:element name="direction" type="xs:string"/>
+<xs:element name="pValue" type="xs:string"/>
+<xs:element name="msiCutoff" type="xs:string"/>
+<xs:element name="poleCutoff" type="xs:string"/>
+
+<!-- definition of attributes -->
+<xs:attribute name="sigName" type="xs:string"/>
+<xs:attribute name="type" type="xs:string"/>
+
+<!-- definition of complex elements -->
+<xs:element name="mutationType">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="direction"/>
+      <xs:element ref="pValue"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
