@@ -3,7 +3,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-04">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -12,7 +12,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-05">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -32,7 +32,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-07a">
 		<strandBias>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -41,7 +41,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-07b">
 		<strandBias>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -50,11 +50,11 @@
 	
 	<signatureName signatureSBS = "Signature Subs-07c">
 		<strandBias>
-			<mutationType type = "T>A">
+			<mutationType mutType = "T>A">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -63,7 +63,7 @@
 
 	<signatureName signatureSBS = "Signature Subs-07d">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -72,7 +72,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-08">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -103,7 +103,7 @@
 
 	<signatureName signatureSBS = "Signature Subs-12">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -134,7 +134,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-16">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -143,7 +143,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-19">
 		<strandBias>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -163,7 +163,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-21">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -180,7 +180,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-22">
 		<strandBias>
-			<mutationType type = "T>A">
+			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -189,7 +189,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-23">
 		<strandBias>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -198,7 +198,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-24">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -207,7 +207,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-25">
 		<strandBias>
-			<mutationType type = "T>A">
+			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -216,7 +216,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-26">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -233,7 +233,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-27">
 		<strandBias>
-			<mutationType type = "T>A">
+			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -242,7 +242,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-31">
 		<strandBias>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -251,7 +251,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-32">
 		<strandBias>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -260,7 +260,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-33">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -269,7 +269,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-35">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -278,11 +278,11 @@
 	
 	<signatureName signatureSBS = "Signature Subs-42">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -291,7 +291,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-44">
 		<strandBias>
-			<mutationType type = "T>G">
+			<mutationType mutType = "T>G">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -300,7 +300,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-46">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -309,7 +309,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-47">
 		<strandBias>
-			<mutationType type = "T>G">
+			<mutationType mutType = "T>G">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -318,7 +318,7 @@
 	
 	<signatureName signatureSBS = "Signature Subs-50">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -327,15 +327,15 @@
 	
 	<signatureName signatureSBS = "Signature Subs-51">
 		<strandBias>
-			<mutationType type = "C>A">
+			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
-			<mutationType type = "C>T">
+			<mutationType mutType = "C>T">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
-			<mutationType type = "T>A">
+			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
@@ -344,11 +344,11 @@
 	
 	<signatureName signatureSBS = "Signature Subs-57">
 		<strandBias>
-			<mutationType type = "T>C">
+			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
-			<mutationType type = "T>G">
+			<mutationType mutType = "T>G">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
