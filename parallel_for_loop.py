@@ -57,7 +57,9 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
                                           'input/T_to_C_ATN_p.txt',
                                           'input/T_to_C_ATN_d.txt',
                                           'input/T_to_G_p.txt',
-                                          'input/T_to_G_d.txt')
+                                          'input/T_to_G_d.txt',
+                                          'input/20181108_Signature_Rules.xml',
+                                          'input/Signature_Rules_Schema.xsd')
             
     #Remove all signatures in the sample: one by one
     #Add signatures that are allowed everywhere
