@@ -1,9 +1,41 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct  5 18:36:41 2018
+# This source code file is a part of SigProfilerSingleSample
 
-@author: compactmatter
-"""
+# SigProfilerSingleSample is a tool included as part of the SigProfiler
+
+# computational framework for comprehensive analysis of mutational
+
+# signatures from next-generation sequencing of cancer genomes.
+
+# SigProfilerSingleSample 
+
+# Copyright (C) 2018 [Gudur Ashrith Reddy]
+
+#
+
+# SigProfilerSingleSample is free software: you can redistribute it and/or modify
+
+# it under the terms of the GNU General Public License as published by
+
+# the Free Software Foundation, either version 3 of the License, or
+
+# (at your option) any later version.
+
+#
+
+# SigProfilerSingleSample is distributed in the hope that it will be useful,
+
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+
+# GNU General Public License for more details.
+
+#
+
+# You should have received a copy of the GNU General Public License
+
+# along with SigProfilerSingleSample.  If not, see http://www.gnu.org/licenses/
+
 import xml.etree.ElementTree as ET  
 
 def check_signature_rules(signaturesInSample,
@@ -28,17 +60,7 @@ def check_signature_rules(signaturesInSample,
                           T_to_G_d_file,
                           signatureRulesXML):
     
-    totalSignatures = len(signaturesInSample)
-    strand_bias_cutoff = 10**-2
-    
-    if (seqType[sampleID] == 'WGS'):
-        pole_subs_cutoff = 10**5
-        msi_subs_cutoff = 10**4
-    elif (seqType[sampleID] == 'WES'):
-        pole_subs_cutoff = 2 * 10**3
-        msi_subs_cutoff = 2 * 10**2
-    else:
-        print('Invalid type of sequencing data!')    
+    totalSignatures = len(signaturesInSample)  
     
     C_to_A_p = [float(i) for i in open(C_to_A_p_file,'r').read().split('\n')]
     C_to_A_d = [float(i) for i in open(C_to_A_d_file,'r').read().split('\n')]
@@ -61,16 +83,16 @@ def check_signature_rules(signaturesInSample,
     signaturesList = []    
     for i in range(totalSignatures):
         for signature in root.findall('signatureName'):
-            signaturesList.append(signature.get("sigName"))
+            signaturesList.append(signature.get("signatureSBS"))
             
         if(signatures[i] in signaturesList):
-            if (root.find(".//strandBias/..[@sigName='" + signatures[i] + "']") is not None):
-                strandbias = root.find(".//strandBias/..[@sigName='Signature Subs-04']").find('strandBias').findall('mutationType')
+            if (root.find(".//strandBias/..[@signatureSBS='" + signatures[i] + "']") is not None):
+                strandbias = root.find(".//strandBias/..[@signatureSBS='Signature Subs-04']").find('strandBias').findall('mutationType')
                 for sb in range(len(strandbias)):
                     if( eval(strandbias[sb].get('type').replace('>','_to_') + "_p[sampleID]") > float(strandbias[sb][1].text) or
                        eval(strandbias[sb].get('type').replace('>','_to_') + "_d[sampleID]") != float(strandbias[sb][0].text)):
                         signaturesInSample[i] = 0
-            if (root.find(".//totalMutations/..[@sigName='Signature Subs-04']") is not None):
+            if (root.find(".//totalMutations/..[@signatureSBS='Signature Subs-04']") is not None):
                 totalmutations = root.find(".//totalMutations/..[@sigName='" + signatures[i] + "']").find('totalMutations').findall('seqType')
                 for st in range(len(totalmutations)):
                     if( totalmutations[st].get('type') == seqType[sampleID]):
