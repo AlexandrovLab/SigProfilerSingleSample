@@ -37,6 +37,7 @@
 # along with SigProfilerSingleSample.  If not, see http://www.gnu.org/licenses/
 
 import xml.etree.ElementTree as ET  
+from lxml import etree
 
 def check_signature_rules(signaturesInSample,
                           signatures,
@@ -58,7 +59,8 @@ def check_signature_rules(signaturesInSample,
                           T_to_C_ATN_d_file,
                           T_to_G_p_file,
                           T_to_G_d_file,
-                          signatureRulesXML):
+                          signatureRulesXML,
+                          signatureRulesXMLSchema):
     
     totalSignatures = len(signaturesInSample)  
     
@@ -78,6 +80,16 @@ def check_signature_rules(signaturesInSample,
     T_to_G_d = [float(i) for i in open(T_to_G_d_file,'r').read().split('\n')]
 
     tree = ET.parse(signatureRulesXML)  
+    
+    #Validate XML file against schema
+    xml = etree.parse(signatureRulesXML)
+
+    schema_doc = etree.parse(signatureRulesXMLSchema)
+    schema = etree.XMLSchema(schema_doc)
+
+    if (schema.validate(xml) == False):
+        print(schema.assertValid(xml))
+    
     root = tree.getroot()
 
     signaturesList = []    
@@ -89,10 +101,10 @@ def check_signature_rules(signaturesInSample,
             if (root.find(".//strandBias/..[@signatureSBS='" + signatures[i] + "']") is not None):
                 strandbias = root.find(".//strandBias/..[@signatureSBS='Signature Subs-04']").find('strandBias').findall('mutationType')
                 for sb in range(len(strandbias)):
-                    if( eval(strandbias[sb].get('type').replace('>','_to_') + "_p[sampleID]") > float(strandbias[sb][1].text) or
-                       eval(strandbias[sb].get('type').replace('>','_to_') + "_d[sampleID]") != float(strandbias[sb][0].text)):
+                    if( eval(strandbias[sb].get('mutType').replace('>','_to_') + "_p[sampleID]") > float(strandbias[sb][1].text) or
+                       eval(strandbias[sb].get('mutType').replace('>','_to_') + "_d[sampleID]") != float(strandbias[sb][0].text)):
                         signaturesInSample[i] = 0
-            if (root.find(".//totalMutations/..[@signatureSBS='Signature Subs-04']") is not None):
+            if (root.find(".//totalMutations/..[@signatureSBS='" + signatures[i] + "']") is not None):
                 totalmutations = root.find(".//totalMutations/..[@sigName='" + signatures[i] + "']").find('totalMutations').findall('seqType')
                 for st in range(len(totalmutations)):
                     if( totalmutations[st].get('type') == seqType[sampleID]):
