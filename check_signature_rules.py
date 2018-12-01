@@ -99,16 +99,19 @@ def check_signature_rules(signaturesInSample,
             
         if(signatures[i] in signaturesList):
             if (root.find(".//strandBias/..[@signatureSBS='" + signatures[i] + "']") is not None):
-                strandbias = root.find(".//strandBias/..[@signatureSBS='Signature Subs-04']").find('strandBias').findall('mutationType')
+                strandbias = root.find(".//strandBias/..[@signatureSBS='" + signatures[i] + "']").find('strandBias').findall('mutationType')
                 for sb in range(len(strandbias)):
                     if( eval(strandbias[sb].get('mutType').replace('>','_to_') + "_p[sampleID]") > float(strandbias[sb][1].text) or
                        eval(strandbias[sb].get('mutType').replace('>','_to_') + "_d[sampleID]") != float(strandbias[sb][0].text)):
-                        signaturesInSample[i] = 0
+                       signaturesInSample[i] = 0
+                       
             if (root.find(".//totalMutations/..[@signatureSBS='" + signatures[i] + "']") is not None):
-                totalmutations = root.find(".//totalMutations/..[@sigName='" + signatures[i] + "']").find('totalMutations').findall('seqType')
+                totalmutations = root.find(".//totalMutations/..[@signatureSBS='" + signatures[i] + "']").find('totalMutations').findall('seqType')
                 for st in range(len(totalmutations)):
                     if( totalmutations[st].get('type') == seqType[sampleID]):
                         if( float(totalMutations[sampleID]) < float(totalmutations[st][0].text) ):
                             signaturesInSample[i] = 0
                 
     return signaturesInSample
+
+#
