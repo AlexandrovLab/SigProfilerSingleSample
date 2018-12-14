@@ -38,6 +38,9 @@ def KLDiv(P,Q):
     else:
         Q = Q /np.matlib.repmat(sum(Q),1, Q.shape[1])
         P = P /np.matlib.repmat(sum(P),1, P.shape[1])
+        for p_i in range(len(P)):
+            if P[p_i] == 0:
+                P[p_i] = Q[p_i]
         temp =  P * np.log(np.divide(P,Q))
         temp[np.isnan(temp)]=0 # resolving the case when P(i)==0
         dist = sum(temp)
