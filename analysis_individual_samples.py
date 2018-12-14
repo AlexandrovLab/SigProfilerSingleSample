@@ -42,7 +42,7 @@ def analysis_individual_samples(signaturesSet,
     kl_div_org = np.zeros((totalSamples, 1))  
     frob_rel_div_org = np.zeros((totalSamples, 1))
     norm_one_dif_org = np.zeros((totalSamples, 1)) 
-
+    #print(inputSamples)
     #Loading signatures
     newSignatures = open(newSignatures_file,'r').read().split('\n')
     
@@ -67,7 +67,7 @@ def analysis_individual_samples(signaturesSet,
     sigNames = newSignatures
     totalSignatures = allGenomeSignatures.shape[1]
     exposuresNew = np.zeros((totalSignatures, totalSamples))
-
+    #print(allExomeSignatures.shape)
     #Loading signatures in samples
     #sigsInCanType = load(signaturesInSamples)
     
@@ -91,11 +91,20 @@ def analysis_individual_samples(signaturesSet,
     num_cores = multiprocessing.cpu_count()
     #print(Parallel(n_jobs = num_cores)(delayed(parallel_for_loop)(iSample, inputSamples, allGenomeSignatures, allExomeSignatures, cancerType_file, seqType_file, totalMutations_file, sampleNames, signaturesInSamples_file, longSampleNames, totalSignatures, useRules, sigNames, idsToAdd, connected, saOptions, exposuresNew, accr_org, kl_div_org, frob_rel_div_org, norm_one_dif_org) for iSample in range(totalSamples)))
     
+    #print(idsToAdd)
+    #print(connected)
+    idsToAdd[:] = [x - 1 for x in idsToAdd] #To account for differences in MATLAB and Python array indexing
+    for iConnect in range(len(connected)): #To account for differences in MATLAB and Python array indexing
+            connected[iConnect][:] = [x - 1 for x in connected[iConnect]]
+    #print(idsToAdd)
+    #print(idsToAdd)
+    #print(connected)
+    
     for iSample in range(totalSamples):
         print(parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignatures, cancerType_file,
-                                                                seqType_file, totalMutations_file, sampleNames, signaturesInSamples_file,
-                                                                longSampleNames, totalSignatures, useRules, sigNames, idsToAdd, connected,
-                                                                saOptions, exposuresNew, accr_org, kl_div_org, frob_rel_div_org, norm_one_dif_org))
+                                seqType_file, totalMutations_file, sampleNames, signaturesInSamples_file,
+                                longSampleNames, totalSignatures, useRules, sigNames, idsToAdd, connected,
+                                saOptions, exposuresNew, accr_org, kl_div_org, frob_rel_div_org, norm_one_dif_org))
         #Select cancer sample and set of signatures      
         #COME BACK LATER TO CREATE OUTPUTFORDER AUTOMATICALLY
         #if ( exist(outputFolder,'dir') == 0 ):
