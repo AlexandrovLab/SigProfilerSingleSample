@@ -32,3 +32,24 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     To get help on the parameters and outputs of the "importdata" function, please write down the following line:
     
     >>> help(spss.importdata)
+    
+### single_sample
+
+    Decompose the query samples into the global signatures.
+    
+    single_sample(vcf, outputdir, exome=False)
+    
+    Example: 
+    -------
+    >>> from sigproSS import spss 
+    >>> data = spss.importdata()
+    >>> spss.single_sample(data, "results", ref="GRCh37", exome=False)
+    
+    To get help on the parameters and outputs of the "importdata" function, please write down the following line:
+    
+    >>> help(spss.single_sample)
+## COPYRIGHT
+This software and its documentation are copyright 2018 as a part of the sigProfiler project. The SigProfilerExtractor framework is free software and is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+## CONTACT INFORMATION
+Please address any queries or bug reports to S M Ashiqul Islam (Mishu) at m0islam.ucsd.edu
