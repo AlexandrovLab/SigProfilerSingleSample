@@ -148,6 +148,54 @@ attributeFormDefault="unqualified">
   		</xs:complexType>
 	</xs:element> <!--signatureName ends here-->
 
+			<xs:element name = "connectedSignatures"   minOccurs = "1" maxOccurs = "1"> 
+				<xs:complexType>
+					<xs:sequence>
+						
+					<xs:element name = "connected"   minOccurs = "1" maxOccurs = "unbounded"> 
+						<xs:complexType>
+							<xs:sequence>
+					
+							<xs:element name="signature" minOccurs = "1" maxOccurs ="unbounded">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+								
+							</xs:sequence>
+							
+							<xs:attribute name = "Set"> 
+								<xs:simpleType>
+   									<xs:restriction base="xs:string">
+   									</xs:restriction>	
+  								</xs:simpleType>
+							</xs:attribute>
+							
+						</xs:complexType>
+					</xs:element><!--connected ends here-->
+					
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element><!--connectedSignatures ends here-->
+			
+			
+			<xs:element name = "alwaysIncludeSignatures"   minOccurs = "1" maxOccurs = "1"> 
+				<xs:complexType>
+					<xs:sequence>
+						
+							<xs:element name="signature" minOccurs = "1" maxOccurs ="unbounded">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+					
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element><!--alwaysIncludeSignatures ends here-->
+				
+	
 	</xs:sequence>
 </xs:complexType>
 </xs:element><!--signatureRules ends here-->
