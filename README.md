@@ -1,4 +1,6 @@
 # SigProfilerSingleSample
+SigProfilerSingleSample allows attributing a known set of mutational signatures to an individual sample. The tool identifies the activity of each signature in the sample and assigns the probability for each signature to cause a specific mutation type in the sample. The tool makes use of SigProfilerMatrixGenerator, SigProfilerExtractor and SigProfilerPlotting. 
+
 ## INSTALLATION
 In the commandline, please type the following line:
 ```
