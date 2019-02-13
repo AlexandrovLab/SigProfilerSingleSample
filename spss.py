@@ -212,12 +212,16 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     
     #print(exposures)
     ##########################################################[exposures, accr, kl_div, frob_rel_div, norm_one_dif] = remove_all_single_signatures(exposures, allSignatures, genome, sigNames)
-
+    
     
     IDs = [i for i,x in enumerate(exposures) if x > 0]
+    #!print("Signatures Selected to Remove after checking the rules:")
+    #!print(IDs)
     processes = allSignatures[:,IDs]
 
     exposure =   sigopt.initial_optimization(processes, genome) #processes, sample 
+    #exposure, similarity =   sigopt.fit_signatures(processes, genome) #processes, sample
+    #exposure = exposure[:,np.newaxis]
 
     pool = mp.Pool(processes=1)
     results = [pool.apply_async(sigopt.remove_signatures, args=(x,processes,exposure,genome,)) for x in range(genome.shape[1])]
@@ -230,6 +234,8 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
         exposureAfterRemovingSignatures[:,i]=output[i] 
 
     np.put(exposures, IDs, exposureAfterRemovingSignatures.ravel())
+    #print(np.nonzero(exposures)[0])
+    
     #Add all remaining signatures to the sample: one by one
     #Add signatures that are allowed everywhere
     #print(exposures)
@@ -246,6 +252,7 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
 
     #print(exposures)
     IDs = [i for i,x in enumerate(exposures) if x > 0] #Changed i to i+1 
+    #print(IDs)
     
     #print(exposureAfterRemovingSignatures) ###############
     
@@ -257,12 +264,13 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     #pd.DataFrame(processes).to_csv("processes_file.txt", sep = "\t")
     #pd.DataFrame(genome).to_csv("genome_file.txt", sep = "\t")
     #print("done")
+    
     exposureAfterAddingSignatures = sigopt.add_signatures(allSignatures, genome, 0.025, IDs)[0]
     #print(len(exposureAfterAddingSignatures))
     #Add signatures that are allowed everywhere
     exposures = exposureAfterAddingSignatures
     ## ## ## ## np.put(exposures, IDs, exposureAfterAddingSignatures.ravel())
-    #print(exposures)
+   
     
     
     #print(exposures)#####################
@@ -279,6 +287,7 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     
     #print(exposures)
     IDs = [i for i,x in enumerate(exposures) if x > 0]
+   
     
     ################################################################[exposures, accr_org[iSample], kl_div_org[iSample], frob_rel_div_org[iSample], norm_one_dif_org[iSample]] = eval_single_sample(exposures, allSignatures, genome)
 
@@ -431,7 +440,7 @@ def decomposition_profile(exposures, similarity, signatureList , sampleName):
 
 
 
-def single_sample(vcf, outputdir, exome=False):
+def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
     
     
     """
@@ -477,7 +486,13 @@ def single_sample(vcf, outputdir, exome=False):
     #get the path for files
     paths = cosmic.__path__[0]
     
-    data = matGen.SigProfilerMatrixGeneratorFunc(vcf, "GRCh37", vcf, exome=False)
+    if vcf[-1] != "/":
+        vcf_name = vcf.split("/")[-1]
+    else:
+        vcf_name = vcf.split("/")[-2]
+    
+
+    data = matGen.SigProfilerMatrixGeneratorFunc(vcf_name, ref, vcf, exome=exome)
     
     # make the totalExposure dataframe which have dimention of totalsignatures and totalsamples
     
@@ -528,7 +543,7 @@ def single_sample(vcf, outputdir, exome=False):
         fh.close()
         
         
-        print("\n\n")
+    
     
     
     
