@@ -9,8 +9,8 @@ $pip install sigproSS
 Install your desired reference genome from the command line/terminal as follows (available reference genomes are: GRCh37, GRCh38, mm9, and mm10):
 ```
 $ python
->> from SigProfilerMatrixGenerator import install as genInstall
->> genInstall.install('GRCh37')
+>>> from SigProfilerMatrixGenerator import install as genInstall
+>>> genInstall.install('GRCh37')
 ```
 This will install the human 37 assembly as a reference genome. You may install as many genomes as you wish.
 
@@ -53,9 +53,9 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     
     This "data" variable can be used as a parameter of the second argument of the single_sample_pcwag function.
     
-    **To get help on the parameters and outputs of the "importdata" function, please write down the following line:**
+   **To get help on the parameters and outputs of the "importdata" function, please write down the following line:**
     
-    _>>> help(spss.importdata)_
+   _>>> help(spss.importdata)_
     
 ### single_sample
 
@@ -69,7 +69,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     >>> data = spss.importdata() ##'you can put the path of your own vcf project here'
     >>> spss.single_sample(data, "results", ref="GRCh37", exome=False)
     
-    **To get help on the parameters and outputs of the "single_sample" function, please write down the following line:**
+   **To get help on the parameters and outputs of the "single_sample" function, please write down the following line:**
     
     _>>> help(spss.single_sample)_
     
@@ -85,9 +85,9 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     >>> csv192 = spss.importdata("pcwag192") #''you can put the path of your own csv192 file here'
     >>> spss_pcwag.single_sample_pcwag(csv96, csv192, output="example_output")
     
-    **To get help on the parameters and outputs of the "single_sample_pcwag" function, please write down the following line:**
+  **To get help on the parameters and outputs of the "single_sample_pcwag" function, please write down the following line:**
     
-    _>>> help(spss_pcwag.single_sample_pcwag)_    
+  _>>> help(spss_pcwag.single_sample_pcwag)_    
     
 ## COPYRIGHT
 This software and its documentation are copyright 2018 as a part of the sigProfiler project. The SigProfilerExtractor framework is free software and is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
