@@ -317,6 +317,11 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     #out_str = ['Sample #' + str(iSample+1) + ': ' + str(inputSamples['cancerType'][iSample][0]) + ' ' + str(inputSamples['sampleNames'][iSample][0]) + ' with ' + str(sum(exposuresNew[:, iSample]>0)) + ' signatures and an accuracy of ' + str(round(accr_org[iSample][0],2))] #BEWARE ,'%.2f' removed
     #out_str = ['Sample #' + str(iSample+1) + ': [' + str(cancerType[iSample]) + '] [' + str(sampleNames[iSample]) + '] with ' + str(sum(exposuresNew[:, iSample]>0)) + ' signatures']
     
+    print(indices)
+    print(exposures)
+    print(sigNames)
+    print(allSignatures.shape)
+    print(similarity)
     return([indices,exposures,sigNames, allSignatures, similarity])               
 
 
@@ -510,6 +515,7 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
         index = i
         samples = data["96"].iloc[:,index:index+1]
         p_value = data["7_pvalue"]
+        #print(p_value)
         samples = np.array(samples)
         sampleNames = list(data["96"].head(0))[index:index+1]
         cancerType = ['Breast Cancer']*samples.shape[1]
@@ -587,7 +593,7 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
     probability.to_csv(outputdir+"/probabilities.txt", "\t")
     plot.plotSBS(outputdir+"/signatures.txt", outputdir+"/Signature_plot", "", "96", True)
 
-def importdata():
+def importdata(inpute_type="vcf"):
     
     """
     Imports the path of example data.
@@ -614,11 +620,17 @@ def importdata():
     
     paths = cosmic.__path__[0]
     directory = os.getcwd()
-    dataold = paths+"/input/vcf"
-    datanew = directory+"/vcf"
-    if not os.path.exists(datanew):
-        shutil.copytree(dataold , datanew) 
-    data="vcf"
+    if inpute_type=="pcwag96":
+        data=paths+"/input/csv_example96.csv"
+    elif inpute_type=="pcwag192":
+        data=paths+"/input/csv_example192.csv"
+    
+    elif inpute_type=="pcwag192":
+        dataold = paths+"/input/vcf"
+        datanew = directory+"/vcf"
+        if not os.path.exists(datanew):
+            shutil.copytree(dataold , datanew) 
+        data="vcf"
     return data
 
 

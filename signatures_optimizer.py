@@ -45,6 +45,7 @@ def parameterized_objective2_custom(x, signatures, samples):
         y = LA.norm(samples-rec[:,np.newaxis])
     except:
         y = LA.norm(samples-rec)
+    
     return y
 
 
@@ -75,7 +76,7 @@ def initial_optimization(processes, genomes):
     
     for i in range(genomes.shape[1]):
         Gi = genomes[:,i]
-    
+        
         #initialize the guess
         x0 = np.random.rand(processes.shape[1], 1)*maxmutation[i]
         x0= x0/np.sum(x0)*maxmutation[i]
@@ -84,8 +85,9 @@ def initial_optimization(processes, genomes):
         bnds = create_bounds([], Gi, processes.shape[1]) 
         cons1 ={'type': 'eq', 'fun': constraints1, 'args':[Gi]} 
         
+       
         #the optimization step
-        sol = optimize.minimize(parameterized_objective2_custom, x0, args=(processes, Gi),  bounds=bnds, constraints =cons1, tol=1e-15)
+        sol = optimize.minimize(parameterized_objective2_custom, x0, args=(processes, Gi),  bounds=bnds, constraints =cons1, tol=1e-30)
         exposure[:,i]=sol.x
         
     return exposure
@@ -222,15 +224,21 @@ def remove_signatures(indices, W, exposures, totoalgenomes):
 
 
 
-def add_signatures(W, genome, cutoff=0.025, presentSignatures=[]):
+def add_signatures(W, genome, cutoff=0.025, presentSignatures=[], toBeAdded="all"):
+     # This function takes an array of signature and a single genome as input, returns a dictionray of cosine similarity, exposures and presence 
+     # of signatures according to the indices of the original signature array
     
-    # This function takes an array of signature and a single genome as input, returns a dictionray of cosine similarity, exposures and presence 
-    # of signatures according to the indices of the original signature array
-    
+    if toBeAdded == "all":
+        notToBeAdded=[]
+    else:               
+        #print(len(list(range(W.shape[1]))))
+        #print(len(toBeAdded))
+        notToBeAdded = list(set(list(range(W.shape[1])))-set(toBeAdded)) # get the indices of the signatures to be excluded
+        #print(len(notToBeAdded))
     originalSimilarity = -1 # it can be also written as oldsimilarity
     maxmutation = round(np.sum(genome))
-    init_listed_idx = presentSignatures
-    init_nonlisted_idx = list(set(list(range(W.shape[1])))-set(init_listed_idx))
+    init_listed_idx = presentSignatures 
+    init_nonlisted_idx = list(set(list(range(W.shape[1])))-set(init_listed_idx)-set(notToBeAdded))
     finalRecord = [["similarity place-holder" ], ["newExposure place-holder"], ["signatures place-holder"]] #for recording the cosine difference, similarity, the new exposure and the index of the best signauture
     
     # get the initial original similarity if some signatures are already given to be present
@@ -239,6 +247,7 @@ def add_signatures(W, genome, cutoff=0.025, presentSignatures=[]):
         loop_liststed_idx.sort()
         #print(loop_liststed_idx)
         W1 = W[:,loop_liststed_idx]
+       
         #print (W1.shape)
         #initialize the guess
         x0 = np.random.rand(W1.shape[1], 1)*maxmutation
@@ -269,6 +278,7 @@ def add_signatures(W, genome, cutoff=0.025, presentSignatures=[]):
         est_genome = np.dot(W1, newExposure)
         originalSimilarity = cos_sim(genome[:,0], est_genome)
         finalRecord = [originalSimilarity, newExposure, init_listed_idx]
+        
         
     while True:
         bestDifference = -1 
@@ -379,6 +389,7 @@ def fit_signatures(W, genome):
     #print(W1)
     #convert the newExposure vector into list type structure
     newExposure = list(sol.x)
+    
     
     # get the maximum value of the new Exposure
     maxcoef = max(newExposure)
