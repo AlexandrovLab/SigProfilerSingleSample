@@ -18,7 +18,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
 
 ## FUNCTIONS
 
-### importdata 
+### _importdata_ 
     
     
     Imports the path of example data.
@@ -57,7 +57,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     
      >>> help(spss.importdata)
     
-### single_sample
+### _single_sample_
 
     Decompose the query samples into the global signatures.
     
@@ -73,7 +73,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     
     >>> help(spss.single_sample)
     
-### single_sample_pcwag
+### _single_sample_pcwag_
     Decompose the query samples those are in pcwag format into the global signatures.
     
     single_sample_pcwag(csv96, csv192="", output="results", par_one=0.01, par_two=0.025, n_cpu=-1)
