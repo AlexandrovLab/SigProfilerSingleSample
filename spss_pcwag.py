@@ -515,16 +515,16 @@ def assign_signatures96(s, genome=0, genome192=0, sig_pcwag=0, par_one=0.01, par
 
 
 
-def single_sample(csv, csv192="", output="results", par_one=0.01, par_two=0.025, n_cpu=-1):
+def single_sample_pcwag(csv96, csv192="", output="results", par_one=0.01, par_two=0.025, n_cpu=-1):
     
     """ 
     This function takes the csv file of the mutation context SBS96 and SBS192 the same sample/samples. The csv files should be in the PCWAG format.
     The output is the activity of the global signatures of the sample/samples.
     
     Parameters:
-        csv: string. name of the csv file of 96 context. 
-        csv: string. name of the csv file of 192 context of the same samples in the csv file.
-        outpu: string. name of the output folder.
+        csv96: string. name of the csv file of 96 context. 
+        csv192: string. name of the csv file of 192 context of the same samples in the csv file.
+        output: string. name of the output folder.
         par_one = float. the cut off cosine similarity difference in the first layer of adding signature. defualt value is 0.01.
         par_two = float. the cut off consine similarity difference in the second layer of adding sinature. defualt value is 0.025.
         cpu = integer. the number of cpus to used. default value is -1 which uses all cpus.  
@@ -546,7 +546,7 @@ def single_sample(csv, csv192="", output="results", par_one=0.01, par_two=0.025,
     >>> from sigproSS import spss, spss_pcwag 
     >>> csv96 = spss.importdata("pcwag96")  #'you can put the path of your own csv96 file here'
     >>> csv192 = spss.importdata("pcwag192") #''you can put the path of your own csv192 file here'
-    >>> spss_pcwag.single_sample(csv96, csv192, output="example_output")
+    >>> spss_pcwag.single_sample_pcwag(csv96, csv192, output="example_output")
         
     """
     
@@ -560,7 +560,7 @@ def single_sample(csv, csv192="", output="results", par_one=0.01, par_two=0.025,
            
     # get the genome
    
-    genome, idx, col, mtype = sub.read_csv(csv)
+    genome, idx, col, mtype = sub.read_csv(csv96)
     genome = genome.set_index(idx)
     genome.columns = col
     if csv192 != "":

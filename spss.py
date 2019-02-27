@@ -607,13 +607,33 @@ def importdata(inpute_type="vcf"):
 
     The path of the example data.
 
-    Example: 
+    Example 1: 
     -------
-    >>> from sigproSS import spss 
-    >>> data = spss.importdata()
+    To import an example vcf project provided with the package:
     
-    This "data" variable can be used as a parameter of the first argument of the sigpross function.
+    >>> from sigproSS import spss 
+    >>> data = spss.importdata("vcf")
+    
+    This "data" variable can be used as a parameter of the first argument of the single_sample function.
         
+    
+    Example 2: 
+    -------
+    To import an example csv96 file (for more description please the singple_sample_pcwag function) provided with the package:
+        
+    >>> from sigproSS import spss 
+    >>> data = spss.importdata("pcwag96")
+    
+    This "data" variable can be used as a parameter of the first argument of the single_sample_pcwag function.
+    
+    Example 3: 
+    -------
+    To import an example csv192 file (for more description please the singple_sample_pcwag function) provided with the package:
+        
+    >>> from sigproSS import spss 
+    >>> data = spss.importdata("pcwag192")
+    
+    This "data" variable can be used as a parameter of the second argument of the single_sample_pcwag function.
     """
     
     
