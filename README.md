@@ -55,7 +55,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     
    **To get help on the parameters and outputs of the "importdata" function, please write down the following line:**
     
-   _>>> help(spss.importdata)_
+   >>> help(spss.importdata)
     
 ### single_sample
 
@@ -71,7 +71,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     
    **To get help on the parameters and outputs of the "single_sample" function, please write down the following line:**
     
-    _>>> help(spss.single_sample)_
+    >>> help(spss.single_sample)
     
 ### single_sample_pcwag
     Decompose the query samples those are in pcwag format into the global signatures.
@@ -87,7 +87,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
     
   **To get help on the parameters and outputs of the "single_sample_pcwag" function, please write down the following line:**
     
-  _>>> help(spss_pcwag.single_sample_pcwag)_    
+  >>> help(spss_pcwag.single_sample_pcwag)   
     
 ## COPYRIGHT
 This software and its documentation are copyright 2018 as a part of the sigProfiler project. The SigProfilerExtractor framework is free software and is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
