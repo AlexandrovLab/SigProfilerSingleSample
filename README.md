@@ -61,7 +61,7 @@ open a python interpreter and import the SigProfilerExtractor module. Please see
 
     Decompose the query samples into the global signatures.
     
-    single_sample(vcf, outputdir, exome=False)
+    single_sample(data, output, ref="GRCh37", sig_database = "default", check_rules = True, exome=False)
     
     Example: 
     -------
