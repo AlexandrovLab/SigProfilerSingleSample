@@ -467,40 +467,43 @@ def assign_signatures96(s, genome=0, genome192=0, sig_pcwag=0, par_one=0.01, par
         sigs = sigs.set_index(idx)
         sigs.columns = col
         sigs = np.array(sigs) 
-       
         
-        #get the initial exposure
-        preselected = ["SBS1", "SBS5"]
-        preselected_idx = get_indeces(list(col), preselected)
-        #exposures, similarity = fit_signatures(sigs[:,0:5], sample)
-       
+        # adding the sigtures in the first round       
+        try:    #if the signature database is default
+            #get the initial exposure
+            preselected = ["SBS1", "SBS5"]
+            preselected_idx = get_indeces(list(col), preselected)
+            #exposures, similarity = fit_signatures(sigs[:,0:5], sample)
+        except:  # if the signature database is custom
+            preselected_idx = []
         # Add the signatures in the first round. a = exposures, b= similarity
         a, b = sigopt.add_signatures(sigs, sample, cutoff=par_one, presentSignatures=preselected_idx, toBeAdded=selected_indeces)
         present = np.nonzero(a)[0]
         added_first = get_items_from_index(list(col),list(present))
-        #print(samples)
-        #print(added_first)
-        #print(b)
-        #print("\n")
+        print(added_first)
         
+        
+        
+        
+        # adding the sigtures in the second round 
         # Add the signatures in the second round. a = exposures, b= similarity
         nonselected_indeces = list(set(list(range(sigs.shape[1])))-set(selected_indeces))
         a,b = sigopt.add_signatures(sigs, sample, cutoff=par_two, presentSignatures=list(present), toBeAdded= nonselected_indeces)
         present = np.nonzero(a)[0]
         added_second = get_items_from_index(list(col),list(present))
-        #print(samples)
-        #print(added_second)
-        #print(b)
+        ##print(samples)
+        print(added_second)
+        ##print(b)
         
-        
-        #get the connected signatures
-        connected_singnatures = [["SBS17a", "SBS17b"], ["SBS7a","SBS7b", "SBS7c","SBS7d"], ["SBS2", "SBS13"], ["SBS10a", "SBS10b"]]
-        connected = []     
-        for i in connected_singnatures:
-            #print (i)
-            if any(j in added_second for j in i):
-                connected = connected + i
-        
+        try:   #if the signature database is default
+            #get the connected signatures
+            connected_singnatures = [["SBS17a", "SBS17b"], ["SBS7a","SBS7b", "SBS7c","SBS7d"], ["SBS2", "SBS13"], ["SBS10a", "SBS10b"]]
+            connected = []     
+            for i in connected_singnatures:
+                if any(j in added_second for j in i):
+                    connected = connected + i
+        except:   # if the signature database is custom
+            connected = [] 
         
         #get the final signatures
         finalSignatures = list(set(added_second).union(set(connected)))
@@ -515,14 +518,14 @@ def assign_signatures96(s, genome=0, genome192=0, sig_pcwag=0, par_one=0.01, par
 
 
 
-def single_sample_pcwag(csv96, csv192="", output="results", par_one=0.01, par_two=0.025, n_cpu=-1):
+def single_sample_pcwag(csv, csv192="", output="results", sigbase="default", par_one=0.01, par_two=0.025, n_cpu=-1):
     
     """ 
     This function takes the csv file of the mutation context SBS96 and SBS192 the same sample/samples. The csv files should be in the PCWAG format.
     The output is the activity of the global signatures of the sample/samples.
     
     Parameters:
-        csv96: string. name of the csv file of 96 context. 
+        csv: string. name of the csv file of 96 context. 
         csv192: string. name of the csv file of 192 context of the same samples in the csv file.
         output: string. name of the output folder.
         par_one = float. the cut off cosine similarity difference in the first layer of adding signature. defualt value is 0.01.
@@ -560,7 +563,7 @@ def single_sample_pcwag(csv96, csv192="", output="results", par_one=0.01, par_tw
            
     # get the genome
    
-    genome, idx, col, mtype = sub.read_csv(csv96)
+    genome, idx, col, mtype = sub.read_csv(csv)
     genome = genome.set_index(idx)
     genome.columns = col
     if csv192 != "":
@@ -572,10 +575,11 @@ def single_sample_pcwag(csv96, csv192="", output="results", par_one=0.01, par_tw
     else:
         genome192 = ""
     
-    
-    
     #get the signature files
-    sig_pcwag = pd.read_csv(paths+"/input/sigProfiler_SBS_signatures.csv", index_col = [0,1])
+    if sigbase == "default":    
+        sig_pcwag = pd.read_csv(paths+"/input/sigProfiler_SBS_signatures.csv", index_col = [0,1])
+    else:
+        sig_pcwag = pd.read_csv(sigbase, index_col = [0,1])
     
     
     totalExposures = np.zeros([sig_pcwag.shape[1],genome.shape[1]]) 
@@ -642,8 +646,8 @@ def single_sample_pcwag(csv96, csv192="", output="results", par_one=0.01, par_tw
     #signatures = signatures.loc[:,list(exposures.index)] 
     
     #create the probalities 
-    probability = sub.probabilities(signatures, totalExposures)
-    probability = probability.set_index("Sample")
+    probability = sub.probabilities(signatures, totalExposures, genome.index, signatures.columns, totalExposures.columns)
+    probability = probability.set_index("Sample Names")
     probability = probability.rename_axis("", axis="columns")
     
     

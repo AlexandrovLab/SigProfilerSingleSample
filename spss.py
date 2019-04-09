@@ -133,9 +133,9 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     
     #get the path for files
     paths = cosmic.__path__[0]
-    
+   
     genome = inputSamples[:,iSample]
-    genome = genome.reshape(96,1) #Uncomment for other functions
+    genome = genome.reshape(len(genome),1) #Uncomment for other functions
     if (seqType[iSample] == 'WGS'):
         allSignatures =  allGenomeSignatures
     else:
@@ -157,22 +157,26 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     
       
     
-    C_to_A_p = samplePvalue.iloc[0][0]
-    C_to_A_d = samplePvalue.iloc[0][1]
-    C_to_G_p = samplePvalue.iloc[1][0]
-    C_to_G_d = samplePvalue.iloc[1][1]
-    C_to_T_p = samplePvalue.iloc[2][0]
-    C_to_T_d = samplePvalue.iloc[2][1]
-    T_to_A_p = samplePvalue.iloc[3][0]
-    T_to_A_d = samplePvalue.iloc[3][1]
-    T_to_C_p = samplePvalue.iloc[4][0]
-    T_to_C_d = samplePvalue.iloc[4][1]
-    T_to_C_ATN_p = samplePvalue.iloc[5][0]
-    T_to_C_ATN_d = samplePvalue.iloc[5][1]
-    T_to_G_p = samplePvalue.iloc[6][0]
-    T_to_G_d = samplePvalue.iloc[6][1]
+  
     
     if ( useRules == True ):
+        
+        # get the strand bias data: 
+         
+        C_to_A_p = samplePvalue.iloc[0][0]
+        C_to_A_d = samplePvalue.iloc[0][1]
+        C_to_G_p = samplePvalue.iloc[1][0]
+        C_to_G_d = samplePvalue.iloc[1][1]
+        C_to_T_p = samplePvalue.iloc[2][0]
+        C_to_T_d = samplePvalue.iloc[2][1]
+        T_to_A_p = samplePvalue.iloc[3][0]
+        T_to_A_d = samplePvalue.iloc[3][1]
+        T_to_C_p = samplePvalue.iloc[4][0]
+        T_to_C_d = samplePvalue.iloc[4][1]
+        T_to_C_ATN_p = samplePvalue.iloc[5][0]
+        T_to_C_ATN_d = samplePvalue.iloc[5][1]
+        T_to_G_p = samplePvalue.iloc[6][0]
+        T_to_G_d = samplePvalue.iloc[6][1]
         #print("Using rules")
         exposures = check_signature_rules(exposures,
                                           sigNames,
@@ -197,64 +201,67 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
                                           paths+'/input/Signature_Rules_Schema.xsd')
     
     
-    #print("Total Mutations", totalMutations[0])
     
-    #Remove all signatures in the sample: one by one
-    #Add signatures that are allowed everywhere    
-    if (idsToAdd != False):
-        exposures[idsToAdd] = 1 
-    
-    #Add connected signatures
-    if (len(connected) > 0):
-        for iConnect in range(len(connected)):
-            if ( sum(exposures[connected[iConnect]]) > 0 ):
-                exposures[connected[iConnect]] = 1
-    
-    #print(exposures)
-    ##########################################################[exposures, accr, kl_div, frob_rel_div, norm_one_dif] = remove_all_single_signatures(exposures, allSignatures, genome, sigNames)
+        
     
     
-    IDs = [i for i,x in enumerate(exposures) if x > 0]
-    #!print("Signatures Selected to Remove after checking the rules:")
-    #!print(IDs)
-    processes = allSignatures[:,IDs]
-
-    exposure =   sigopt.initial_optimization(processes, genome) #processes, sample 
-    #exposure, similarity =   sigopt.fit_signatures(processes, genome) #processes, sample
-    #exposure = exposure[:,np.newaxis]
-
-    pool = mp.Pool(processes=1)
-    results = [pool.apply_async(sigopt.remove_signatures, args=(x,processes,exposure,genome,)) for x in range(genome.shape[1])]
+        #print("Total Mutations", totalMutations[0])
+        
+        #Remove all signatures in the sample: one by one
+        #Add signatures that are allowed everywhere    
+        if (idsToAdd != False):
+            exposures[idsToAdd] = 1 
+        
+        #Add connected signatures
+        if (len(connected) > 0):
+            for iConnect in range(len(connected)):
+                if ( sum(exposures[connected[iConnect]]) > 0 ):
+                    exposures[connected[iConnect]] = 1
+        
+        #print(exposures)
+        ##########################################################[exposures, accr, kl_div, frob_rel_div, norm_one_dif] = remove_all_single_signatures(exposures, allSignatures, genome, sigNames)
+        
+        
+        IDs = [i for i,x in enumerate(exposures) if x > 0]
+        #!print("Signatures Selected to Remove after checking the rules:")
+        #!print(IDs)
+        processes = allSignatures[:,IDs]
     
-    output = [p.get() for p in results]
-    pool.close()
+        exposure =   sigopt.initial_optimization(processes, genome) #processes, sample 
+        #exposure, similarity =   sigopt.fit_signatures(processes, genome) #processes, sample
+        #exposure = exposure[:,np.newaxis]
     
-    exposureAfterRemovingSignatures = np.zeros(exposure.shape)
-    for i in range(len(output)):
-        exposureAfterRemovingSignatures[:,i]=output[i] 
-
-    np.put(exposures, IDs, exposureAfterRemovingSignatures.ravel())
-    #print(np.nonzero(exposures)[0])
+        pool = mp.Pool(processes=1)
+        results = [pool.apply_async(sigopt.remove_signatures, args=(x,processes,exposure,genome,)) for x in range(genome.shape[1])]
+        
+        output = [p.get() for p in results]
+        pool.close()
+        
+        exposureAfterRemovingSignatures = np.zeros(exposure.shape)
+        for i in range(len(output)):
+            exposureAfterRemovingSignatures[:,i]=output[i] 
     
-    #Add all remaining signatures to the sample: one by one
-    #Add signatures that are allowed everywhere
-    #print(exposures)
+        np.put(exposures, IDs, exposureAfterRemovingSignatures.ravel())
+        #print(np.nonzero(exposures)[0])
+        
+        #Add all remaining signatures to the sample: one by one
+        #Add signatures that are allowed everywhere
+        #print(exposures)
+        
+        if (idsToAdd != False):
+            for i in idsToAdd:
+                exposures[i] = 1
+           
+        #Add connected signatures
+        if (len(connected) > 0):
+            for iConnect in range(len(connected)):
+                if ( sum(exposures[connected[iConnect]]) > 0 ):
+                    exposures[connected[iConnect]] = 1
     
-    if (idsToAdd != False):
-        for i in idsToAdd:
-            exposures[i] = 1
-       
-    #Add connected signatures
-    if (len(connected) > 0):
-        for iConnect in range(len(connected)):
-            if ( sum(exposures[connected[iConnect]]) > 0 ):
-                exposures[connected[iConnect]] = 1
-
-    #print(exposures)
-    IDs = [i for i,x in enumerate(exposures) if x > 0] #Changed i to i+1 
-    #print(IDs)
+        #print(exposures)
+        IDs = [i for i,x in enumerate(exposures) if x > 0] #Changed i to i+1 
+        #print(IDs)
     
-    #print(exposureAfterRemovingSignatures) ###############
     
     
     ######################################################exposures = add_all_single_signatures(exposures, allSignatures, genome, sigNames) #No eval single sample now
@@ -264,6 +271,12 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     #pd.DataFrame(processes).to_csv("processes_file.txt", sep = "\t")
     #pd.DataFrame(genome).to_csv("genome_file.txt", sep = "\t")
     #print("done")
+    
+    else:
+        
+        IDs = []
+        
+    
     
     exposureAfterAddingSignatures = sigopt.add_signatures(allSignatures, genome, 0.025, IDs)[0]
     #print(len(exposureAfterAddingSignatures))
@@ -275,32 +288,36 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     
     #print(exposures)#####################
     
+    if  useRules == True:
+        if (idsToAdd != False):
+            exposures[idsToAdd] = 1
     
-    if (idsToAdd != False):
-        exposures[idsToAdd] = 1
-
-    #Add connected signatures
-    if (len(connected) > 0):
-        for iConnect in range(len(connected)):
-            if ( sum(exposures[connected[iConnect]]) > 0 ):
-                exposures[connected[iConnect]] = 1
+        #Add connected signatures
+        if (len(connected) > 0):
+            for iConnect in range(len(connected)):
+                if ( sum(exposures[connected[iConnect]]) > 0 ):
+                    exposures[connected[iConnect]] = 1
+        
+        #print(exposures)
+        IDs = [i for i,x in enumerate(exposures) if x > 0]
+       
+        
+        ################################################################[exposures, accr_org[iSample], kl_div_org[iSample], frob_rel_div_org[iSample], norm_one_dif_org[iSample]] = eval_single_sample(exposures, allSignatures, genome)
     
-    #print(exposures)
-    IDs = [i for i,x in enumerate(exposures) if x > 0]
-   
+        #IDs = [i for i,x in enumerate(exposures) if x > 0] #BEWARE
+        #processes = allSignatures[:,IDs]#BEWARE
     
-    ################################################################[exposures, accr_org[iSample], kl_div_org[iSample], frob_rel_div_org[iSample], norm_one_dif_org[iSample]] = eval_single_sample(exposures, allSignatures, genome)
-
-    #IDs = [i for i,x in enumerate(exposures) if x > 0] #BEWARE
-    #processes = allSignatures[:,IDs]#BEWARE
-
-    #exposure =   initial_optimization(processes, genome)#BEWARE
-    #exposures = np.zeros((totalSignatures, 1)) #BEWARE
-    #np.put(exposures, IDs, exposure.ravel()) #BEWARE
-    #print(exposures)
-    exposuresNew[:, iSample] = exposures.ravel() #exposures
-    #print(exposuresNew)
-    indices = np.nonzero(exposuresNew)[0] 
+        #exposure =   initial_optimization(processes, genome)#BEWARE
+        #exposures = np.zeros((totalSignatures, 1)) #BEWARE
+        #np.put(exposures, IDs, exposure.ravel()) #BEWARE
+        #print(exposures)
+        exposuresNew[:, iSample] = exposures.ravel() #exposures
+        #print(exposuresNew)
+    
+        indices = np.nonzero(exposuresNew)[0] 
+        
+    else:
+        indices = np.nonzero(exposures)[0]
     #print(exposuresNew[list(indices)])
     
     
@@ -317,11 +334,7 @@ def parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignat
     #out_str = ['Sample #' + str(iSample+1) + ': ' + str(inputSamples['cancerType'][iSample][0]) + ' ' + str(inputSamples['sampleNames'][iSample][0]) + ' with ' + str(sum(exposuresNew[:, iSample]>0)) + ' signatures and an accuracy of ' + str(round(accr_org[iSample][0],2))] #BEWARE ,'%.2f' removed
     #out_str = ['Sample #' + str(iSample+1) + ': [' + str(cancerType[iSample]) + '] [' + str(sampleNames[iSample]) + '] with ' + str(sum(exposuresNew[:, iSample]>0)) + ' signatures']
     
-    print(indices)
-    print(exposures)
-    print(sigNames)
-    print(allSignatures.shape)
-    print(similarity)
+   
     return([indices,exposures,sigNames, allSignatures, similarity])               
 
 
@@ -366,12 +379,12 @@ def analysis_individual_samples(#signaturesSet,
     norm_one_dif_org = np.zeros((totalSamples, 1)) 
     #print(inputSamples)
     #Loading signatures
-    newSignatures = open(newSignatures_file,'r').read().split('\n')
+    newSignatures = newSignatures_file
     
 
     
-    allGenomeSignatures = np.loadtxt(genomeSignatures_file)  
-    allExomeSignatures  = np.loadtxt(exomeSignatures_file)
+    allGenomeSignatures = genomeSignatures_file
+    allExomeSignatures  = exomeSignatures_file
     sigNames = newSignatures
     totalSignatures = allGenomeSignatures.shape[1]
     exposuresNew = np.zeros((totalSignatures, totalSamples))
@@ -384,35 +397,47 @@ def analysis_individual_samples(#signaturesSet,
     longSampleNames = ["" for x in range(len(sampleNames))]
     
     for i in range(len(sampleNames)): #MATLAB CODE for i = 1 : size(sigsInCanType.sampleNames, 1)
-       longSampleNames[i] = sampleCancerTypes[i] + '::' + sampleNames[i]
+       longSampleNames[i] = sampleCancerTypes[i] + '::' + str(sampleNames[i])
 
     
 
     #print(Parallel(n_jobs = num_cores)(delayed(parallel_for_loop)(iSample, inputSamples, allGenomeSignatures, allExomeSignatures, cancerType_file, seqType_file, totalMutations_file, sampleNames, signaturesInSamples_file, longSampleNames, totalSignatures, useRules, sigNames, idsToAdd, connected, saOptions, exposuresNew, accr_org, kl_div_org, frob_rel_div_org, norm_one_dif_org) for iSample in range(totalSamples)))
     #print(sigNames)
-    [connected, allowSigsEverywhere] = get_connected_alwaysinclude_signatures(signatureRulesXML, sigNames)
-    #print(connected)
-    #print(allowSigsEverywhere)
+    if useRules == True:
+        [connected, allowSigsEverywhere] = get_connected_alwaysinclude_signatures(signatureRulesXML, sigNames)
     
-    if(dir().count('allowSigsEverywhere') > 0 and len(allowSigsEverywhere) > 0):
-        ###!print('Allow these signatures in all samples:')
-        for i in range(len(allowSigsEverywhere)):
-            ###!print(newSignatures[allowSigsEverywhere[i]])
-            idsToAdd = allowSigsEverywhere
+        
+        
+        #print(connected)
+        #print(allowSigsEverywhere)
+        
+        if(dir().count('allowSigsEverywhere') > 0 and len(allowSigsEverywhere) > 0):
+            ###!print('Allow these signatures in all samples:')
+            for i in range(len(allowSigsEverywhere)):
+                ###!print(newSignatures[allowSigsEverywhere[i]])
+                idsToAdd = allowSigsEverywhere
+        else:
+            idsToAdd = False 
+            
+            
+        
+        if (dir().count('connected') > 0 and len(connected) > 0):
+            ###!print('These mutational signatures are connected:')
+            for i in range(len(connected)):
+                dispStr = 'Set ' + str(i+1) + ':' + newSignatures[connected[i][0]]
+                for j in range(1, len(connected[i])):
+                    dispStr = dispStr + '; ' + newSignatures[connected[i][j]]
+                ###!print(dispStr)
     else:
+        connected = "none"
         idsToAdd = False 
     
-    if (dir().count('connected') > 0 and len(connected) > 0):
-        ###!print('These mutational signatures are connected:')
-        for i in range(len(connected)):
-            dispStr = 'Set ' + str(i+1) + ':' + newSignatures[connected[i][0]]
-            for j in range(1, len(connected[i])):
-                dispStr = dispStr + '; ' + newSignatures[connected[i][j]]
-            ###!print(dispStr)
-
-    
     for iSample in range(totalSamples):
-        samplePvalue = p_value.iloc[:,iSample]
+        if useRules == True:
+            samplePvalue = p_value.iloc[:,iSample]
+        else:
+            samplePvalue = [1, 0.5]
+            
         results = parallel_for_loop(iSample, inputSamples, allGenomeSignatures, allExomeSignatures, cancerType,
                                 seqType, totalMutations, sampleNames, samplePvalue,
                                 longSampleNames, totalSignatures, useRules, sigNames, idsToAdd, connected
@@ -445,7 +470,7 @@ def decomposition_profile(exposures, similarity, signatureList , sampleName):
 
 
 
-def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
+def single_sample(data, output, ref="GRCh37", sig_database = "default", check_rules = True, exome=False):
     
     
     """
@@ -453,11 +478,15 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
     
     parameters
     ----------
-    vcf: A string. The name of the folder containing the vcf files. The folder should be present in the current working directory. 
+    vcf: string or dataframe. The name of the folder containing the vcf files. The folder should be present in the current working directory. If a dataframe is used, that should be a mutational catalogue where the row 
+    index will be the names of mutations and the column names will be the sample names. 
     outputdir: A string. The name of the output folder. The output folder will be generated in the current working directory according to name provided in the current working directory. 
-    ref: A string. The name of the reference genome file. The file should be installed previously through "SigProfilerMatrixGenerator". 
+    ref:  string. The name of the reference genome file. The file should be installed previously through "SigProfilerMatrixGenerator". 
     Please see the "INSTALLATION" part of the README.md file. The default reference genome is "GRCh37".
-    exome: A boolean. If the agrument is True, that will genearate the mutational profile only for the exomes. If False, the profile 
+    sig_database: dataframe. This is signature catalogue where the row index will be the names of mutations and the column names will be the sample names. The sum of each column should be one. The row numbers should be equal 
+    to the row the number of the mutational catalogue and the order/sequence of the mutation types should be same as of those in the mutational catalogue. 
+    check_rules: boolean. If true, check the signature rules. Not functional for the custom signature database.  
+    exome: boolean. If the agrument is True, that will genearate the mutational profile only for the exomes. If False, the profile 
     for the whole genome sequence will be generated. 
           
     
@@ -483,41 +512,102 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
         
     """
     
-    if not os.path.exists(outputdir):
-        os.makedirs(outputdir)
+    if not os.path.exists(output):
+        os.makedirs(output)
         
         
     
     #get the path for files
     paths = cosmic.__path__[0]
     
-    if vcf[-1] != "/":
-        vcf_name = vcf.split("/")[-1]
+    
+    
+    #set the signature database:
+    if type(sig_database) == str:
+        signatures_names = paths+'/input/signaturesSet.txt'
+        wholegenome_singnatures = paths+'/input/genomeSignatures.txt'
+        exome_signatures = paths+'/input/exomeSignatures.txt'
+        
+        #extract data from the signature database  
+        signaturesNames = open(signatures_names,'r').read().split('\n')
+        allGenomeSignatures = np.loadtxt(wholegenome_singnatures)  
+        allExomeSignatures  = np.loadtxt(exome_signatures)
+        
+        
+        
     else:
-        vcf_name = vcf.split("/")[-2]
+        signaturesNames = list(sig_database.columns)
+        allGenomeSignatures = np.array(sig_database)
+        allExomeSignatures = np.array(sig_database)
+        
     
-
-    data = matGen.SigProfilerMatrixGeneratorFunc(vcf_name, ref, vcf, exome=exome)
+    # take the inputs
     
-    # make the totalExposure dataframe which have dimention of totalsignatures and totalsamples
+   
     
-    totalExposures = np.zeros([65,data["96"].shape[1]])
-    listOfSamples = list(data["96"].head(0))
+    # check if the input type is a vcf or a dataframe    
+    if type(data) == str:
+        
+        vcf = data
+        if vcf[-1] != "/":
+            vcf_name = vcf.split("/")[-1]
+        else:
+            vcf_name = vcf.split("/")[-2]
+            
+        data = matGen.SigProfilerMatrixGeneratorFunc(vcf_name, ref, vcf, exome=exome, tsb_stat= True)
+    
+        # make the totalExposure dataframe which have dimention of totalsignatures and totalsamples
+        p_value = data["7_pvalue"]
+        data = data["96"]
+        
+    else:
+        p_value = "none"
+        check_rules = False
+        
+    number_of_signatures = len(signaturesNames)
+    totalExposures = np.zeros([number_of_signatures, data.shape[1]])
+    listOfSamples = list(data.columns)
+    
+    
+    
+        
+            
+    
+    
     
     # open a file to profile the signatures
-    fh = open(outputdir+"/decomposition profile.csv", "w")
+    fh = open(output+"/decomposition profile.csv", "w")
     fh.write("Sample Names, Global NMF Signatures, Similarity\n")
     fh.close()
     
-    for i in range(data["96"].shape[1]):
+    
+    #set the signature database:
+    if type(sig_database) == str:
+        signatures_names = paths+'/input/signaturesSet.txt'
+        wholegenome_singnatures = paths+'/input/genomeSignatures.txt'
+        exome_signatures = paths+'/input/exomeSignatures.txt'
+        
+        #extract data from the signature database  
+        signaturesNames = open(signatures_names,'r').read().split('\n')
+        allGenomeSignatures = np.loadtxt(wholegenome_singnatures)  
+        allExomeSignatures  = np.loadtxt(exome_signatures)
+        
+    else:
+        signaturesNames = sig_database.columns
+        allGenomeSignatures = np.array(sig_database)
+        allExomeSignatures = np.array(sig_database)
+        
+        
+    
+    
+    for i in range(data.shape[1]):
         print("##########################################################")
         print("Exacting Profile for "+"Sample " +str(i+1))
         index = i
-        samples = data["96"].iloc[:,index:index+1]
-        p_value = data["7_pvalue"]
+        samples = data.iloc[:,index:index+1]
         #print(p_value)
         samples = np.array(samples)
-        sampleNames = list(data["96"].head(0))[index:index+1]
+        sampleNames = list(data.head(0))[index:index+1]
         cancerType = ['Breast Cancer']*samples.shape[1]
         seqType = ['WGS']*samples.shape[1]
         totalMutations= np.sum(samples, axis=0)
@@ -527,10 +617,10 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
         
         #results variable contains [indices,exposures, signatureNames, allSignatures, similarity]
         results = analysis_individual_samples(samples, 
-                                    True,
-                                    paths+'/input/signaturesSet.txt',
-                                    paths+'/input/genomeSignatures.txt',
-                                    paths+'/input/exomeSignatures.txt',
+                                    check_rules,
+                                    signaturesNames,
+                                    allGenomeSignatures,
+                                    allExomeSignatures,
                                     sampleNames,
                                     cancerType,
                                     cancerType,
@@ -544,7 +634,7 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
         profile = decomposition_profile(totalExposures[:,i],  results[4], results[2], sampleNames[0])
         
         #write the profiles into file
-        fh = open(outputdir+"/decomposition profile.csv", "a")
+        fh = open(output+"/decomposition profile.csv", "a")
         fh.write(profile)
         fh.close()
         
@@ -570,7 +660,7 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
     #presure the signatures dataframe
     signatures = pd.DataFrame(results[3])
     signatures.columns = listOfSignatures
-    signatures = signatures.set_index(data["96"].index)
+    signatures = signatures.set_index(data.index)
     signatures = signatures.rename_axis("Signatures", axis="columns")
     
     #Filter the signatures by the exposures rows to get the final signature dataframe
@@ -583,17 +673,22 @@ def single_sample(vcf, outputdir, ref="GRCh37", exome=False):
     
     try:
         #create the dedrogrames
-        Y, dn = sub.dendrogram(exposures, 0.05, outputdir)
+        Y, dn = sub.dendrogram(exposures, 0.05, output)
     except:
         pass
         
     #export results
-    signatures.to_csv(outputdir+"/signatures.txt", "\t", index_label=[signatures.columns.name]) 
-    exposures.to_csv(outputdir+"/exposures.txt", "\t", index_label=[exposures.columns.name]) 
-    probability.to_csv(outputdir+"/probabilities.txt", "\t")
-    plot.plotSBS(outputdir+"/signatures.txt", outputdir+"/Signature_plot", "", "96", True)
+    signatures.to_csv(output+"/Signatures.txt", "\t", index_label=[signatures.columns.name]) 
+    exposures.to_csv(output+"/Sig_activities.txt", "\t", index_label=[exposures.columns.name]) 
+    probability.to_csv(output+"/Mutation_Probabilities.txt", "\t")
+    try:
+        plot.plotSBS(output+"/signatures.txt", output+"/Signature_plot", "", "96", True, custom_text_upper= " ")
+    except:
+        print("SORRY! THE MUTATION CONTEXT YOU PROVIDED COULD NOT BE PLOTTED\n\n")
+    
+    print("CONGRATULATIONS! THE SIGPROFILER SINGLE SAMPLE ANALYSIS ENDED SUCCESSFULLY")
 
-def importdata(inpute_type="vcf"):
+def importdata(input_type="vcf"):
     
     """
     Imports the path of example data.
@@ -640,12 +735,12 @@ def importdata(inpute_type="vcf"):
     
     paths = cosmic.__path__[0]
     directory = os.getcwd()
-    if inpute_type=="pcwag96":
+    if input_type=="pcwag96":
         data=paths+"/input/csv_example96.csv"
-    elif inpute_type=="pcwag192":
+    elif input_type=="pcwag192":
         data=paths+"/input/csv_example192.csv"
     
-    elif inpute_type=="pcwag192":
+    elif input_type=="vcf":
         dataold = paths+"/input/vcf"
         datanew = directory+"/vcf"
         if not os.path.exists(datanew):
