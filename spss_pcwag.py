@@ -384,8 +384,7 @@ def apply_TSB_rules(input_mutations, input_signatures, mutation_type, verbose=Fa
     'SBS33':{'T>C':-1},
     'SBS35':{'C>A':1,'C>T':1},
     'SBS42':{'C>A':1,'C>T':1},
-    'SBS45':{'C>A':1},
-    'SBS45':{'T>C':1},
+    'SBS45':{'C>A':1,'T>C':1},
     'SBS47':{'T>A':-1,'T>G':1},
     'SBS50':{'C>A':-1},
     'SBS51':{'C>A':1,'C>T':-1,'T>A':1},
@@ -476,11 +475,14 @@ def assign_signatures96(s, genome=0, genome192=0, sig_pcwag=0, par_one=0.01, par
             #exposures, similarity = fit_signatures(sigs[:,0:5], sample)
         except:  # if the signature database is custom
             preselected_idx = []
+            
         # Add the signatures in the first round. a = exposures, b= similarity
         a, b = sigopt.add_signatures(sigs, sample, cutoff=par_one, presentSignatures=preselected_idx, toBeAdded=selected_indeces)
         present = np.nonzero(a)[0]
-        added_first = get_items_from_index(list(col),list(present))
-        print(added_first)
+        
+        #added_first = get_items_from_index(list(col),list(present))
+        
+        
         
         
         
@@ -491,9 +493,8 @@ def assign_signatures96(s, genome=0, genome192=0, sig_pcwag=0, par_one=0.01, par
         a,b = sigopt.add_signatures(sigs, sample, cutoff=par_two, presentSignatures=list(present), toBeAdded= nonselected_indeces)
         present = np.nonzero(a)[0]
         added_second = get_items_from_index(list(col),list(present))
-        ##print(samples)
-        print(added_second)
-        ##print(b)
+       
+       
         
         try:   #if the signature database is default
             #get the connected signatures
@@ -518,16 +519,19 @@ def assign_signatures96(s, genome=0, genome192=0, sig_pcwag=0, par_one=0.01, par
 
 
 
-def single_sample_pcwag(csv, csv192="", output="results", sigbase="default", par_one=0.01, par_two=0.025, n_cpu=-1):
+def single_sample_pcwag(samples, samples192="", output="results", sigbase="default", par_one=0.01, par_two=0.025, n_cpu=-1):
     
     """ 
     This function takes the csv file of the mutation context SBS96 and SBS192 the same sample/samples. The csv files should be in the PCWAG format.
     The output is the activity of the global signatures of the sample/samples.
     
     Parameters:
-        csv: string. name of the csv file of 96 context. 
-        csv192: string. name of the csv file of 192 context of the same samples in the csv file.
+        samples:  string or dataframe. if string, this should be a csv file of 96 context PCAWG format. if dataframe, this should be a mutational catalogue where the row 
+        index will be the names of mutations and the column names will be the sample names. 
+        samples192: string. only valid if the "samples" argument is a 96 contex samples. this should be a csv file in 192 context PCAWG format where the samples should be indentical to the input of the "samples" argument.
         output: string. name of the output folder.
+        sigbase: string or dataframe. if string, this should be the name of the csv files in PCAWG format that contains the signature database. The signature database matrix should have the same number
+        of rows the "samples" input has. 
         par_one = float. the cut off cosine similarity difference in the first layer of adding signature. defualt value is 0.01.
         par_two = float. the cut off consine similarity difference in the second layer of adding sinature. defualt value is 0.025.
         cpu = integer. the number of cpus to used. default value is -1 which uses all cpus.  
@@ -562,25 +566,40 @@ def single_sample_pcwag(csv, csv192="", output="results", sigbase="default", par
         
            
     # get the genome
-   
-    genome, idx, col, mtype = sub.read_csv(csv)
-    genome = genome.set_index(idx)
-    genome.columns = col
-    if csv192 != "":
+    if type(samples)==str:
+        genome, idx, col, mtype = sub.read_csv(samples)
+        genome = genome.set_index(idx)
+        genome.columns = col
+    else: 
+        genome = samples
+        
+    if samples192 != "":
         # get the 192 context of the genome     
-        genome192 = pd.read_csv(csv192, sep=",", index_col = [0,1,2])
+        genome192 = pd.read_csv(samples192, sep=",", index_col = [0,1,2])
         #Check if the 96 context agrees with the 192 context
         if genome.shape[1] != genome192.shape[1]:
             raise Exception('Please the correct format of the 96 and 192 context files')
+        elif genome.shape[0] != 96:
+            print("samples192 parameter will not be used for the mutational context of your input sample")
+            genome192 = ""
     else:
         genome192 = ""
     
     #get the signature files
-    if sigbase == "default":    
-        sig_pcwag = pd.read_csv(paths+"/input/sigProfiler_SBS_signatures.csv", index_col = [0,1])
+    if type(sigbase)==str:
+        if sigbase == "default":    
+            sig_pcwag = pd.read_csv(paths+"/input/sigProfiler_SBS_signatures.csv", index_col = [0,1])
+        else:
+            sig_pcwag = pd.read_csv(sigbase, index_col = [0,1])
+        
+         
     else:
-        sig_pcwag = pd.read_csv(sigbase, index_col = [0,1])
-    
+        sig_pcwag = sigbase
+        
+    #check if the signature matrix is compatible with genome matrix
+    if genome.shape[0] != sig_pcwag.shape[0]:
+        raise Exception('The size mutation context of samples is not compatible to the signature database')
+        
     
     totalExposures = np.zeros([sig_pcwag.shape[1],genome.shape[1]]) 
     listOfSamples = list(col)
@@ -670,7 +689,7 @@ def single_sample_pcwag(csv, csv192="", output="results", sigbase="default", par
     #plot.plotSBS(outputdir+"/signatures.txt", outputdir+"/Signature_plot", "", "96", True)  
     
     # Finish the process
-    print ("\n\n Your Job is Completed! Thank you for using Sigprofiler Single Sample.")
+    print ("\n\nYour Job is Completed! Thank you for using Sigprofiler Single Sample.")
     
         
 #single_sample("Biliary-AdenoCA.96.csv", csv192="Biliary-AdenoCA.192.csv", output="results", par_one=0.01, par_two=0.025)        
