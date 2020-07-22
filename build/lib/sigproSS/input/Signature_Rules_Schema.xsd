@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns="https://www.w3schools.com"
+elementFormDefault="qualified"
+attributeFormDefault="unqualified">
+
+<xs:element name = "signatureRules">
+	<xs:complexType>
+		<xs:sequence>
+	
+<xs:element name="signatureName" maxOccurs = "unbounded"> <!--signatureName can have 2 complex elements - 1. strandBias; 2. totalMutations-->
+  <xs:complexType>
+    <xs:sequence>
+		
+		<xs:element name = "strandBias" minOccurs = "0" maxOccurs = "1"> <!--1. strandBias-->
+      		<xs:complexType>
+				<xs:sequence>
+				
+		  		<xs:element name = "mutationType" maxOccurs = "unbounded"> <!--strandBias has exactly one complex type element - mutationType -->
+					<xs:complexType>
+						<xs:sequence>
+							
+							<xs:element name="direction"> <!--direction has to be be either 1 or -1-->
+								<xs:simpleType>
+									<xs:restriction base = "xs:integer">
+										<xs:enumeration value = "1"/>
+										<xs:enumeration value = "-1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							
+							<xs:element name="pValue"> <!--pValue has to be between 0 and 1-->
+								<xs:simpleType>
+									<xs:restriction base = "xs:decimal">
+										<xs:minInclusive value = "0.0"/>
+										<xs:maxInclusive value = "1.0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							
+						</xs:sequence>
+						
+						<xs:attribute name = "mutType"> <!--mutatitionType attribute can have one of 6 possible mutations-->
+							<xs:simpleType>
+   								<xs:restriction base="xs:string">
+      								<xs:enumeration value="C>A"/>
+									<xs:enumeration value="C>T"/>
+									<xs:enumeration value="C>G"/>
+									<xs:enumeration value="T>A"/>
+									<xs:enumeration value="T>C"/>
+									<xs:enumeration value="T>G"/>
+   								</xs:restriction>	
+  							</xs:simpleType>
+						</xs:attribute>
+							
+					</xs:complexType>
+				</xs:element> <!--mutationType ends here-->
+				
+				</xs:sequence>
+	  		</xs:complexType>
+		</xs:element> <!--strandBias ends here-->
+		
+		<xs:element name = "totalMutations"   minOccurs = "0" maxOccurs = "1"> <!--2. totalMutations-->
+			<xs:complexType>
+				<xs:sequence>
+					
+					<xs:element name = "seqType"   maxOccurs = "2">
+						<xs:complexType>
+							<xs:sequence>
+							
+							<xs:element name="msiCutoff" minOccurs = "0" maxOccurs = "1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:integer">
+										<xs:minInclusive value = "0"/>
+										<xs:maxInclusive value = "1000000"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							
+							<xs:element name="poleCutoff" minOccurs = "0" maxOccurs = "1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:integer">
+										<xs:minInclusive value = "0"/>
+										<xs:maxInclusive value = "1000000"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						
+						</xs:sequence>
+						<xs:attribute name = "type"> <!--seqType attribute can only be WES or WGS-->
+								<xs:simpleType>
+   									<xs:restriction base="xs:string">
+      									<xs:enumeration value="WES"/>
+										<xs:enumeration value="WGS"/>
+   									</xs:restriction>	
+  								</xs:simpleType>
+							</xs:attribute>
+							
+						</xs:complexType> 
+					</xs:element> <!--seqType ends here-->
+					
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element> <!--totalMutations ends here-->
+		
+    		</xs:sequence>
+		<xs:attribute name = "signatureSBS"> <!--seqType attribute can only be WES or WGS-->
+				<xs:simpleType>
+   					<xs:restriction base="xs:string">
+						<xs:enumeration value="Signature Subs-04"/>
+						<xs:enumeration value="Signature Subs-05"/>
+						<xs:enumeration value="Signature Subs-06"/>
+						<xs:enumeration value="Signature Subs-07a"/>
+						<xs:enumeration value="Signature Subs-07b"/>
+						<xs:enumeration value="Signature Subs-07c"/>
+						<xs:enumeration value="Signature Subs-07d"/>
+						<xs:enumeration value="Signature Subs-08"/>
+						<xs:enumeration value="Signature Subs-10a"/>
+						<xs:enumeration value="Signature Subs-10b"/>
+						<xs:enumeration value="Signature Subs-12"/>
+						<xs:enumeration value="Signature Subs-14"/>
+						<xs:enumeration value="Signature Subs-15"/>
+						<xs:enumeration value="Signature Subs-16"/>
+						<xs:enumeration value="Signature Subs-19"/>
+						<xs:enumeration value="Signature Subs-20"/>
+						<xs:enumeration value="Signature Subs-21"/>
+						<xs:enumeration value="Signature Subs-22"/>
+						<xs:enumeration value="Signature Subs-23"/>
+						<xs:enumeration value="Signature Subs-24"/>
+						<xs:enumeration value="Signature Subs-25"/>
+						<xs:enumeration value="Signature Subs-26"/>
+						<xs:enumeration value="Signature Subs-27"/>
+						<xs:enumeration value="Signature Subs-31"/>
+						<xs:enumeration value="Signature Subs-32"/>
+						<xs:enumeration value="Signature Subs-33"/>
+						<xs:enumeration value="Signature Subs-35"/>
+						<xs:enumeration value="Signature Subs-42"/>
+						<xs:enumeration value="Signature Subs-44"/>
+						<xs:enumeration value="Signature Subs-46"/>
+						<xs:enumeration value="Signature Subs-47"/>
+						<xs:enumeration value="Signature Subs-50"/>
+						<xs:enumeration value="Signature Subs-51"/>
+						<xs:enumeration value="Signature Subs-57"/>
+						<xs:enumeration value="Signature Subs-60"/>
+   					</xs:restriction>	
+  				</xs:simpleType>
+		</xs:attribute>
+  		</xs:complexType>
+	</xs:element> <!--signatureName ends here-->
+
+			<xs:element name = "connectedSignatures"   minOccurs = "1" maxOccurs = "1"> 
+				<xs:complexType>
+					<xs:sequence>
+						
+					<xs:element name = "connected"   minOccurs = "1" maxOccurs = "unbounded"> 
+						<xs:complexType>
+							<xs:sequence>
+					
+							<xs:element name="signature" minOccurs = "1" maxOccurs ="unbounded">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+								
+							</xs:sequence>
+							
+							<xs:attribute name = "Set"> 
+								<xs:simpleType>
+   									<xs:restriction base="xs:string">
+   									</xs:restriction>	
+  								</xs:simpleType>
+							</xs:attribute>
+							
+						</xs:complexType>
+					</xs:element><!--connected ends here-->
+					
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element><!--connectedSignatures ends here-->
+			
+			
+			<xs:element name = "alwaysIncludeSignatures"   minOccurs = "1" maxOccurs = "1"> 
+				<xs:complexType>
+					<xs:sequence>
+						
+							<xs:element name="signature" minOccurs = "1" maxOccurs ="unbounded">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+					
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element><!--alwaysIncludeSignatures ends here-->
+				
+	
+	</xs:sequence>
+</xs:complexType>
+</xs:element><!--signatureRules ends here-->
+
+</xs:schema>

@@ -1,0 +1,2 @@
+include sigproSS/input/*
+include sigproSS/input/vcf/*
