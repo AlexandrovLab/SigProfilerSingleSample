@@ -577,8 +577,8 @@ def single_sample(data, output, ref="GRCh37", sig_database = "default", check_ru
     
     
     # open a file to profile the signatures
-    fh = open(output+"/decomposition profile.csv", "w")
-    fh.write("Sample Names, Global NMF Signatures, Similarity\n")
+    fh = open(output+"/decomposition_profile.csv", "w")
+    fh.write("Sample_Names,Global_NMF_Signatures,Similarity\n")
     fh.close()
     
     
@@ -635,7 +635,7 @@ def single_sample(data, output, ref="GRCh37", sig_database = "default", check_ru
         profile = decomposition_profile(totalExposures[:,i],  results[4], results[2], sampleNames[0])
         
         #write the profiles into file
-        fh = open(output+"/decomposition profile.csv", "a")
+        fh = open(output+"/decomposition_profile.csv", "a")
         fh.write(profile)
         fh.close()
         
@@ -681,7 +681,7 @@ def single_sample(data, output, ref="GRCh37", sig_database = "default", check_ru
         
     #export results
     
-    signatures.to_csv(output+"/Signatures.txt", "\t", index_label=[signatures.columns.name]) 
+    signatures.to_csv(output+"/signatures.txt", "\t", index_label=[signatures.columns.name]) 
     exposures.to_csv(output+"/Sig_activities.txt", "\t", index_label=[exposures.columns.name]) 
     probability.to_csv(output+"/Mutation_Probabilities.txt", "\t")
     try:
