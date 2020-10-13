@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <signatureRules>
-	
-	<signatureName signatureSBS = "Signature Subs-04">
+
+	<signatureName signatureSBS = "SBS4">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>-1</direction>
@@ -9,8 +9,8 @@
 			</mutationType>
 	    </strandBias>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-05">
+
+	<signatureName signatureSBS = "SBS5">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>-1</direction>
@@ -18,8 +18,8 @@
 			</mutationType>
 	    </strandBias>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-06">
+
+	<signatureName signatureSBS = "SBS6">
 		<totalMutations>
 			<seqType type = "WGS">
 				<msiCutoff>10000</msiCutoff>
@@ -29,8 +29,8 @@
 			</seqType>
 		</totalMutations>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-07a">
+
+	<signatureName signatureSBS = "SBS7a">
 		<strandBias>
 			<mutationType mutType = "C>T">
 				<direction>1</direction>
@@ -38,17 +38,17 @@
 			</mutationType>
 	    </strandBias>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-07b">
+
+	<signatureName signatureSBS = "SBS7b">
 		<strandBias>
 			<mutationType mutType = "C>T">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-07c">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS7c">
 		<strandBias>
 			<mutationType mutType = "T>A">
 				<direction>1</direction>
@@ -61,36 +61,25 @@
 	    </strandBias>
 	</signatureName>
 
-	<signatureName signatureSBS = "Signature Subs-07d">
+	<signatureName signatureSBS = "SBS7d">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-08">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS8">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-10a">
-		<totalMutations>
-			<seqType type = "WGS">
-				<poleCutoff>100000</poleCutoff>
-			</seqType>
-			<seqType type = "WES">
-				<poleCutoff>2000</poleCutoff>
-			</seqType>
-		</totalMutations>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-10b">
+
+	<signatureName signatureSBS = "SBS10a">
 		<totalMutations>
 			<seqType type = "WGS">
 				<poleCutoff>100000</poleCutoff>
@@ -101,16 +90,27 @@
 		</totalMutations>
 	</signatureName>
 
-	<signatureName signatureSBS = "Signature Subs-12">
+	<signatureName signatureSBS = "SBS10b">
+		<totalMutations>
+			<seqType type = "WGS">
+				<poleCutoff>100000</poleCutoff>
+			</seqType>
+			<seqType type = "WES">
+				<poleCutoff>2000</poleCutoff>
+			</seqType>
+		</totalMutations>
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS12">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-14">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS14">
 		<totalMutations>
 			<seqType type = "WGS">
 				<msiCutoff>10000</msiCutoff>
@@ -120,8 +120,8 @@
 			</seqType>
 		</totalMutations>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-15">
+
+	<signatureName signatureSBS = "SBS15">
 		<totalMutations>
 			<seqType type = "WGS">
 				<msiCutoff>10000</msiCutoff>
@@ -131,26 +131,26 @@
 			</seqType>
 		</totalMutations>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-16">
+
+	<signatureName signatureSBS = "SBS16">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-19">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS19">
 		<strandBias>
 			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-20">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS20">
 		<totalMutations>
 			<seqType type = "WGS">
 				<msiCutoff>10000</msiCutoff>
@@ -160,8 +160,8 @@
 			</seqType>
 		</totalMutations>
 	</signatureName>
-	
-	<signatureName signatureSBS = "Signature Subs-21">
+
+	<signatureName signatureSBS = "SBS21">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>1</direction>
@@ -176,45 +176,45 @@
 				<msiCutoff>200</msiCutoff>
 			</seqType>
 		</totalMutations>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-22">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS22">
 		<strandBias>
 			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-23">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS23">
 		<strandBias>
 			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-24">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS24">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-25">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS25">
 		<strandBias>
 			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-26">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS26">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>1</direction>
@@ -229,54 +229,54 @@
 				<msiCutoff>200</msiCutoff>
 			</seqType>
 		</totalMutations>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-27">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS27">
 		<strandBias>
 			<mutationType mutType = "T>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-31">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS31">
 		<strandBias>
 			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-32">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS32">
 		<strandBias>
 			<mutationType mutType = "C>T">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-33">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS33">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-35">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS35">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-42">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS42">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>-1</direction>
@@ -287,45 +287,45 @@
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-44">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS44">
 		<strandBias>
 			<mutationType mutType = "T>G">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-46">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS46">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-47">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS47">
 		<strandBias>
 			<mutationType mutType = "T>G">
 				<direction>-1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-50">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS50">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>1</direction>
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-51">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS51">
 		<strandBias>
 			<mutationType mutType = "C>A">
 				<direction>-1</direction>
@@ -340,9 +340,9 @@
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-57">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS57">
 		<strandBias>
 			<mutationType mutType = "T>C">
 				<direction>1</direction>
@@ -353,9 +353,9 @@
 				<pValue>0.01</pValue>
 			</mutationType>
 	    </strandBias>
-	</signatureName>	
-	
-	<signatureName signatureSBS = "Signature Subs-60">
+	</signatureName>
+
+	<signatureName signatureSBS = "SBS60">
 		<totalMutations>
 			<seqType type = "WGS">
 				<msiCutoff>10000</msiCutoff>
@@ -365,36 +365,36 @@
 			</seqType>
 		</totalMutations>
 	</signatureName>
-	
+
 <connectedSignatures>
-	
+
 <connected Set = "Set1">
-	<signature>Signature Subs-17a</signature>
-	<signature>Signature Subs-17b</signature>
-</connected>	
+	<signature>SBS17a</signature>
+	<signature>SBS17b</signature>
+</connected>
 
 <connected Set = "Set2">
-	<signature>Signature Subs-07a</signature>
-	<signature>Signature Subs-07b</signature>
-	<signature>Signature Subs-07c</signature>
-	<signature>Signature Subs-07d</signature>
-</connected>	
+	<signature>SBS7a</signature>
+	<signature>SBS7b</signature>
+	<signature>SBS7c</signature>
+	<signature>SBS7d</signature>
+</connected>
 
 <connected Set = "Set3">
-	<signature>Signature Subs-02</signature>
-	<signature>Signature Subs-13</signature>
-</connected>	
+	<signature>SBS2</signature>
+	<signature>SBS13</signature>
+</connected>
 
 <connected Set = "Set4">
-	<signature>Signature Subs-10a</signature>
-	<signature>Signature Subs-10b</signature>
-</connected>	
+	<signature>SBS10a</signature>
+	<signature>SBS10b</signature>
+</connected>
 
 </connectedSignatures>
 
 <alwaysIncludeSignatures>
-	<signature>Signature Subs-01</signature>
-	<signature>Signature Subs-05</signature>
+	<signature>SBS1</signature>
+	<signature>SBS5</signature>
 </alwaysIncludeSignatures>
 
 </signatureRules>
