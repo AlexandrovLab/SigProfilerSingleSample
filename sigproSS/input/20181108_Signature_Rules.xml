@@ -390,6 +390,11 @@
 	<signature>SBS10b</signature>
 </connected>
 
+<connected Set = "Se54">
+	<signature>SBS84</signature>
+	<signature>SBS85</signature>
+</connected>
+
 </connectedSignatures>
 
 <alwaysIncludeSignatures>

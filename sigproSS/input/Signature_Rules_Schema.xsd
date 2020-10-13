@@ -142,13 +142,13 @@ attributeFormDefault="unqualified">
 						<xs:enumeration value="SBS51"/>
 						<xs:enumeration value="SBS57"/>
 						<xs:enumeration value="SBS60"/>
-            <xs:enumeration value="SBS84"/>
-            <xs:enumeration value="SBS85"/>
-            <xs:enumeration value="SBS86"/>
-            <xs:enumeration value="SBS87"/>
-            <xs:enumeration value="SBS88"/>
-            <xs:enumeration value="SBS89"/>
-            <xs:enumeration value="SBS90"/>
+						<xs:enumeration value="SBS84"/>
+						<xs:enumeration value="SBS85"/>
+						<xs:enumeration value="SBS86"/>
+						<xs:enumeration value="SBS87"/>
+						<xs:enumeration value="SBS88"/>
+						<xs:enumeration value="SBS89"/>
+						<xs:enumeration value="SBS90"/>
 
    					</xs:restriction>
   				</xs:simpleType>
