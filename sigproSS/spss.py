@@ -603,7 +603,7 @@ def single_sample(data, output, ref="GRCh37", sig_database = "default", check_ru
     
     for i in range(data.shape[1]):
         print("##########################################################")
-        print("Exacting Profile for "+"Sample " +str(i+1))
+        print("Extracting Profile for "+"Sample " +str(i+1))
         index = i
         samples = data.iloc[:,index:index+1]
         #print(p_value)
