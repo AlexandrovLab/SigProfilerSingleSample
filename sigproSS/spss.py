@@ -529,7 +529,10 @@ def single_sample(data, output, ref="GRCh37", sig_database = "default", check_ru
         exome_signatures = paths+'/input/exomeSignatures.txt'
         
         #extract data from the signature database  
-        signaturesNames = open(signatures_names,'r').read().split('\n')
+        #signaturesNames = open(signatures_names,'r').read().split('\n')
+        signaturesNames = []
+        with open(signatures_names) as f:
+            signaturesNames = f.read().splitlines() #handle new line at end of file
         allGenomeSignatures = np.loadtxt(wholegenome_singnatures)  
         allExomeSignatures  = np.loadtxt(exome_signatures)
         
@@ -569,41 +572,15 @@ def single_sample(data, output, ref="GRCh37", sig_database = "default", check_ru
     listOfSamples = list(data.columns)
     
     
-    
-    
-        
-            
-    
-    
-    
     # open a file to profile the signatures
     fh = open(output+"/decomposition_profile.csv", "w")
     fh.write("Sample_Names,Global_NMF_Signatures,Similarity\n")
     fh.close()
     
     
-    #set the signature database:
-    if type(sig_database) == str:
-        signatures_names = paths+'/input/signaturesSet.txt'
-        wholegenome_singnatures = paths+'/input/genomeSignatures.txt'
-        exome_signatures = paths+'/input/exomeSignatures.txt'
-        
-        #extract data from the signature database  
-        signaturesNames = open(signatures_names,'r').read().split('\n')
-        allGenomeSignatures = np.loadtxt(wholegenome_singnatures)  
-        allExomeSignatures  = np.loadtxt(exome_signatures)
-        
-    else:
-        signaturesNames = sig_database.columns
-        allGenomeSignatures = np.array(sig_database)
-        allExomeSignatures = np.array(sig_database)
-        
-        
-    
-    
     for i in range(data.shape[1]):
         print("##########################################################")
-        print("Exacting Profile for "+"Sample " +str(i+1))
+        print("Extracting Profile for "+"Sample " +str(i+1))
         index = i
         samples = data.iloc[:,index:index+1]
         #print(p_value)
