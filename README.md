@@ -1,3 +1,7 @@
+⚠️ **DEPRECATION NOTICE** ⚠️
+This repository is deprecated and no longer maintained. Its functionality has been incorporated into [SigProfilerAssignment](https://github.com/alexandrovlab/SigProfilerAssignment).
+Please transition to using SigProfilerAssignment for an up-to-date and enhanced feature set.
+
 # SigProfilerSingleSample
 SigProfilerSingleSample allows attributing a known set of mutational signatures to an individual sample. The tool identifies the activity of each signature in the sample and assigns the probability for each signature to cause a specific mutation type in the sample. The tool makes use of SigProfilerMatrixGenerator, SigProfilerExtractor and SigProfilerPlotting. 
 
